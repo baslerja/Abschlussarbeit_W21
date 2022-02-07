@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Abschlussarbeit WS21/22</title>
+    <script src="js/script.js"></script>
+    <script src="js/human.js"></script>
+    <script src="js/worker.js"></script>
+    <script src="js/customer.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <header>
+        <h1>Döner-Trainer</h1>
+        <!--Amount meals-->
+        <!--Total satisfaction staff-->
+        <!--Total satisfaction customer-->
+    </header>
+
+    <form id="form" name=""> <!--method="get"-->
+        <fieldset>
+            <label>Select the amount of workers:</label>
+            <select id="amountStaff" name="amountStaff">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+            </select><br>
+
+            <label>Select the amount of customers:</label>
+            <select id="amountCustomers" name="amountCustomers">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+            </select>
+            <p>per time</p>
+        </fieldset>
+
+        <fieldset>
+            <label>Capacity warehouse:</label>
+            <input type="radio" id="" name="warehouse" value="warehouseLow">
+            <label for="warehouseLow">low</label>
+            <input type="radio" id="" name="warehouse" value="warehouseMedium">
+            <label for="warehouseMedium">medium</label>
+            <input type="radio" id="" name="warehouse" value="warehouseHigh">
+            <label for="warehouseHigh">high</label><br>
+
+            <label>Capacity containers:</label>
+            <input type="radio" id="" name="containers" value="containerLow">
+            <label for="containerLow">low</label>
+            <input type="radio" id="" name="containers" value="containerMedium">
+            <label for="containerMedium">medium</label>
+            <input type="radio" id="" name="containers" value="containerHigh">
+            <label for="containerHigh">high</label>
+        </fieldset>
+
+        <fieldset>
+            <label>Amount of breaks a worker needs:</label>
+            <input type="radio" id="" name="breaks" value="eight">
+            <label for="eight">8 seconds</label>
+            <input type="radio" id="" name="breaks" value="fifteen">
+            <label for="fifteen">15 seconds</label>
+        </fieldset>
+    </form>
+
+    <canvas width="800" height="600"></canvas>
+
+</body>
+
+</html>
