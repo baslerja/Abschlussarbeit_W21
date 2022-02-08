@@ -7,9 +7,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Abschlussarbeit WS21/22</title>
     <script src="js/script.js"></script>
-    <script src="js/human.js"></script>
+    <!-- <script src="js/human.js"></script>
     <script src="js/worker.js"></script>
-    <script src="js/customer.js"></script>
+    <script src="js/customer.js"></script> -->
+    <script src="js/container.js"></script>
+    <script src="js/vector.js"></script>
+    <script src="js/ingredients.js"></script>
+    <!-- <script src="js/moveable.js"></script> -->
     <link rel="stylesheet" href="style.css">
 </head>
 
@@ -21,35 +25,36 @@
         <!--Total satisfaction customer-->
     </header>
 
-    <form id="form" name=""> <!--method="get"-->
+
+
+    <form id="form" name="" method="get">
         <fieldset>
-            <label>Select the amount of workers:</label>
+            <p>Select the amount of workers:</p>
             <select id="amountStaff" name="amountStaff">
                 <option value="1">1</option>
                 <option value="2">2</option>
                 <option value="3">3</option>
             </select><br>
 
-            <label>Select the amount of customers:</label>
+            <p>Select the amount of customers per TIME:</p>
             <select id="amountCustomers" name="amountCustomers">
                 <option value="1">1</option>
                 <option value="2">2</option>
                 <option value="3">3</option>
             </select>
-            <p>per time</p>
         </fieldset>
 
         <fieldset>
-            <label>Capacity warehouse:</label>
-            <input type="radio" id="" name="warehouse" value="warehouseLow">
+            <p>Capacity warehouse:</p>
+            <input type="radio" id="" name="warehouse" value="warehouseLow" checked>
             <label for="warehouseLow">low</label>
             <input type="radio" id="" name="warehouse" value="warehouseMedium">
             <label for="warehouseMedium">medium</label>
             <input type="radio" id="" name="warehouse" value="warehouseHigh">
             <label for="warehouseHigh">high</label><br>
 
-            <label>Capacity containers:</label>
-            <input type="radio" id="" name="containers" value="containerLow">
+            <p>Capacity containers:</p>
+            <input type="radio" id="" name="containers" value="containerLow" checked>
             <label for="containerLow">low</label>
             <input type="radio" id="" name="containers" value="containerMedium">
             <label for="containerMedium">medium</label>
@@ -58,15 +63,69 @@
         </fieldset>
 
         <fieldset>
-            <label>Amount of breaks a worker needs:</label>
-            <input type="radio" id="" name="breaks" value="eight">
+            <p>How long does a worker need to rest?</p>
+            <input type="radio" id="" name="breaks" value="eight" checked>
             <label for="eight">8 seconds</label>
             <input type="radio" id="" name="breaks" value="fifteen">
             <label for="fifteen">15 seconds</label>
         </fieldset>
+        <button id="startBtn">Start game!</button>
     </form>
 
     <canvas width="800" height="600"></canvas>
+
+    <!-- <section class="sec1">
+        <label for="breadStock">Bread:</label>
+        <progress id="breadStock" value="50" max="100"> 50% </progress>
+        <button id="buyBread">buy new</button>
+    </section>
+    <section class="sec1">
+        <label for="tomatoStock">Tomatoes:</label>
+        <progress id="tomatoStock" value="50" max="100"> 50% </progress>
+        <button id="buyTomato">buy new</button>
+    </section>
+    <section class="sec1">
+        <label for="lettuceStock">Lettuce:</label>
+        <progress id="breadStock" value="50" max="100"> 50% </progress>
+        <button id="buyLettuce">buy new</button>
+    </section>
+    <section class="sec1">
+        <label for="onionStock">Onions:</label>
+        <progress id="onionStock" value="50" max="100"> 50% </progress>
+        <button id="buyOnion">buy new</button>
+    </section>
+    <section class="sec1">
+        <label for="meatStock">Meat:</label>
+        <progress id="meatStock" value="50" max="100"> 50% </progress>
+        <button id="buyMeat">buy new</button>
+    </section>
+
+    <section class="sec2" class="chartWrapper">
+        <label for="breadCounter">Bread:</label>
+        <progress id="breadCounter" value="80" max="100"> 80% </progress>
+        <button id="refillBread">refill</button>
+    </section>
+    <section class="sec2">
+        <label for="tomatoCounter">Tomatoes:</label>
+        <progress id="tomatoCounter" value="80" max="100"> 80% </progress>
+        <button id="refillTomato">refill</button>
+    </section>
+    <section class="sec2">
+        <label for="lettuceCounter">Lettuce:</label>
+        <progress id="lettuceCounter" value="80" max="100"> 80% </progress>
+        <button id="refillLettuce">refill</button>
+    </section>
+    <section class="sec2">
+        <label for="onionCounter">Onions:</label>
+        <progress id="onionCounter" value="80" max="100"> 80% </progress>
+        <button id="refillOnion">refill</button>
+    </section>
+    <section class="sec2">
+        <label for="meatCounter">Meat:</label>
+        <progress id="meatCounter" value="80" max="100"> 80% </progress>
+        <button id="refillMeat">refill</button>
+    </section>
+    <br> -->
 
 </body>
 
