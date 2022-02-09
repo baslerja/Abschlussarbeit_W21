@@ -20,6 +20,8 @@ var Döner_Trainer;
         startBtn.addEventListener("click", startGame);
         let resetBtn = document.querySelector("#resetBtn");
         resetBtn.addEventListener("click", handleLoad);
+        let refillBread = document.querySelector("#refillBread");
+        refillBread.addEventListener("click", refillBreadCon);
         drawBackground();
         drawWarehouse();
         drawContainer();
@@ -29,6 +31,8 @@ var Döner_Trainer;
         //imageData = crc2.getImageData(0, 0, 800, 600);
         //window.setInterval(update, 20);
     }
+    function refillBreadCon() {
+    }
     function startGame() {
         console.log("start Game");
         const form = document.querySelector('form');
@@ -37,8 +41,8 @@ var Döner_Trainer;
         const amountStaff = data.get('amountStaff'); //form Data anzahl worker als string holen
         let staff = parseInt(amountStaff);
         for (let i = 0; i < staff; i++) { //solange index kleiner als anzahl worker ist soll ein neuer worker erstellt werden
-            let randomX = Math.random() * 300 + Math.random() * 300 + 80;
-            let worker = new Döner_Trainer.Worker(1, randomX, 200);
+            let randomX = Math.random() * 600 + 1 + Math.random() * 400 + 100;
+            let worker = new Döner_Trainer.Worker(1, randomX, 300);
             worker.draw();
             workers.push(worker);
         }
@@ -46,7 +50,7 @@ var Döner_Trainer;
         const amountCustomer = data.get('amountCustomer'); //form Data anzahl worker als string holen
         let customer = parseInt(amountCustomer);
         for (let i = 0; i < customer; i++) { //solange index kleiner als anzahl worker ist soll ein neuer worker erstellt werden
-            let randomX = Math.random() * 300 + Math.random() * 300 + 80;
+            let randomX = Math.random() * 600 + 1 + Math.random() * 400 + 100;
             let customer = new Döner_Trainer.Customer(1, randomX, 200);
             customer.draw();
             customers.push(customer);

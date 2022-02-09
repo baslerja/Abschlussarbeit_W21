@@ -13,6 +13,9 @@ var Döner_Trainer;
             this.position = new Döner_Trainer.Vector(_x, _y);
         }
         move(_timeslice) {
+            let offset = new Döner_Trainer.Vector(this.velocity.x, this.velocity.y);
+            offset.scale(_timeslice);
+            this.position.add(offset);
             // switch () {
             //     case TASK.COOK:
             //     case TASK.RESTOCKING:

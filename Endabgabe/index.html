@@ -13,7 +13,6 @@
     <script src="js/container.js"></script>
     <script src="js/vector.js"></script>
     <script src="js/ingredients.js"></script>
-    <!-- <script src="js/moveable.js"></script> -->
     <link rel="stylesheet" href="style.css">
 </head>
 
@@ -23,7 +22,7 @@
         <!--Amount meals-->
         <!--Total satisfaction staff-->
         <!--Total satisfaction customer-->
-    </header>
+    </header>    
 
     <form id="form" name="" method="get">
         <fieldset>
@@ -71,61 +70,52 @@
         <button type="button" id="startBtn">Start Game!</button>
     </form>
 
-    <canvas width="800" height="600"></canvas>
+    <section class="sec1">
+        <div id="breadStock">Bread <meter id="stockMeterB" value="0.8"></meter>
+        </div> 
+        <button id="buyBread" class="buyBtn">buy new</button><br>
 
-    <!-- <section class="sec1">
-        <label for="breadStock">Bread:</label>
-        <progress id="breadStock" value="50" max="100"> 50% </progress>
-        <button id="buyBread">buy new</button>
-    </section>
-    <section class="sec1">
-        <label for="tomatoStock">Tomatoes:</label>
-        <progress id="tomatoStock" value="50" max="100"> 50% </progress>
+        <div id="tomatoStock">Tomato <meter id="stockMeterT" value="0.8"></meter>
+        </div>
         <button id="buyTomato">buy new</button>
-    </section>
-    <section class="sec1">
-        <label for="lettuceStock">Lettuce:</label>
-        <progress id="breadStock" value="50" max="100"> 50% </progress>
+
+        <div id="lettuceStock">Lettuce <meter id="stockMeterL" value="0.8"></meter>
+        </div>
         <button id="buyLettuce">buy new</button>
-    </section>
-    <section class="sec1">
-        <label for="onionStock">Onions:</label>
-        <progress id="onionStock" value="50" max="100"> 50% </progress>
+        
+        <div id="onionStock">Onion <meter id="stockMeterO" value="0.8"></meter>
+        </div>
         <button id="buyOnion">buy new</button>
-    </section>
-    <section class="sec1">
-        <label for="meatStock">Meat:</label>
-        <progress id="meatStock" value="50" max="100"> 50% </progress>
+
+        <div id="meatStock">Meat <meter id="stockMeterM" value="0.8"></meter>
+        </div>
         <button id="buyMeat">buy new</button>
     </section>
 
-    <section class="sec2" class="chartWrapper">
-        <label for="breadCounter">Bread:</label>
-        <progress id="breadCounter" value="80" max="100"> 80% </progress>
-        <button id="refillBread">refill</button>
-    </section>
-    <section class="sec2">
-        <label for="tomatoCounter">Tomatoes:</label>
-        <progress id="tomatoCounter" value="80" max="100"> 80% </progress>
-        <button id="refillTomato">refill</button>
-    </section>
-    <section class="sec2">
-        <label for="lettuceCounter">Lettuce:</label>
-        <progress id="lettuceCounter" value="80" max="100"> 80% </progress>
-        <button id="refillLettuce">refill</button>
-    </section>
-    <section class="sec2">
-        <label for="onionCounter">Onions:</label>
-        <progress id="onionCounter" value="80" max="100"> 80% </progress>
-        <button id="refillOnion">refill</button>
-    </section>
-    <section class="sec2">
-        <label for="meatCounter">Meat:</label>
-        <progress id="meatCounter" value="80" max="100"> 80% </progress>
-        <button id="refillMeat">refill</button>
-    </section>
-    <br> -->
+    <canvas width="800" height="600"></canvas>
 
+    <section class="sec2" class="chartWrapper">
+        <div id="bread">Bread <meter id="meterB" value="0.8"></meter>
+        </div>
+        <button class="refill" id="refillBread">refill</button>
+
+        <div  id="tomato">Tomato <meter id="meterT" value="0.8"></meter>
+        </div>
+        <button class="refill" id="refillTomato">refill</button>
+
+        <div id="lettuce">Lettuce <meter id="meterL" value="0.8"></meter>
+        </div>
+        <button class="refill" id="refillLettuce">refill</button>
+
+        <div id="onion">Onion <meter id="meterO" value="0.8"></meter>
+        </div>
+        <button class="refill" id="refillOnion">refill</button>
+
+        <div id="meat">Meat <meter id="meterM" value="0.8"></meter>
+        </div>
+        <button class="refill" id="refillMeat">refill</button>
+    </section>
+     
 </body>
 
 </html>

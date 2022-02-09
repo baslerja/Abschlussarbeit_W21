@@ -30,6 +30,9 @@ namespace Döner_Trainer {
         let resetBtn: HTMLElement = <HTMLElement>document.querySelector("#resetBtn");
         resetBtn.addEventListener("click", handleLoad);
 
+        let refillBread: HTMLElement = <HTMLElement>document.querySelector("#refillBread");
+        refillBread.addEventListener("click", refillBreadCon);
+
         drawBackground();
         drawWarehouse();
         drawContainer();
@@ -39,6 +42,10 @@ namespace Döner_Trainer {
 
         //imageData = crc2.getImageData(0, 0, 800, 600);
         //window.setInterval(update, 20);
+    }
+
+    function refillBreadCon(): void {
+
     }
 
     function startGame(): void {
@@ -53,8 +60,8 @@ namespace Döner_Trainer {
         let staff: number = parseInt(amountStaff);
 
         for (let i = 0; i < staff; i++) {      //solange index kleiner als anzahl worker ist soll ein neuer worker erstellt werden
-            let randomX: number = Math.random() * 300 + Math.random() * 300 + 80;
-            let worker: Human = new Worker(1, randomX, 200);
+            let randomX: number = Math.random() * 600 + 1 + Math.random() * 400 + 100;
+            let worker: Human = new Worker(1, randomX, 300);
             worker.draw();
             workers.push(worker);
         }
@@ -65,7 +72,7 @@ namespace Döner_Trainer {
         let customer: number = parseInt(amountCustomer);
 
         for (let i = 0; i < customer; i++) {      //solange index kleiner als anzahl worker ist soll ein neuer worker erstellt werden
-            let randomX: number = Math.random() * 300 + Math.random() * 300 + 80;
+            let randomX: number = Math.random() * 600 + 1 + Math.random() * 400 + 100;
             let customer: Human = new Customer(1, randomX, 200);
             customer.draw();
             customers.push(customer);

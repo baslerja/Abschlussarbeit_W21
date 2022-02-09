@@ -17,6 +17,10 @@ namespace Döner_Trainer {
         }
 
         move(_timeslice: number): void {
+            let offset: Vector = new Vector(this.velocity.x, this.velocity.y);
+            offset.scale(_timeslice);
+            this.position.add(offset);
+
             // switch () {
             //     case TASK.COOK:
 
