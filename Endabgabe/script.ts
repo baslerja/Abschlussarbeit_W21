@@ -78,13 +78,28 @@ namespace Döner_Trainer {
     }
 
     function startGame(): void {
-        console.log("start Game");
+        //console.log("start Game");
+
+        workers = [];
+        customers = [];
+
+        counterLeft.bread = 80;
+        counterLeft.tomato = 80;
+        counterLeft.lettuce = 80;
+        counterLeft.onion = 80;
+        counterLeft.meat = 80;
 
         const form = document.querySelector('form')!;
         const data = new FormData(form);
         const amountStock = data.get('warehouse') as string;
         let stock: number = parseInt(amountStock + Math.floor);    //string in number parsen
         storageLeft.bread = storageLeft.tomato = storageLeft.lettuce = storageLeft.onion = storageLeft.meat = stock;
+
+        let meterB: any = document.querySelector('#stockMeterB');
+        meterB.setAttribute("value", stock / 100);
+        storageLeft.bread = 10 * stock;
+
+        //const stressLevel = data.get('breaks') as string;
 
         createWorker();
         createCustomer();
@@ -99,6 +114,43 @@ namespace Döner_Trainer {
         drawCashRegister();
 
         createCustomer();
+    }
+    
+    function buyIngredients(): void {
+        let stockMeterB: any = document.querySelector('#stockMeterB').getAttribute("value");
+        let amountMissingBread: number = 1000 - stockMeterB * 1000;
+        storageLeft.bread += amountMissingBread;
+        
+        let b: any = document.querySelector('#stockMeterB');
+        b.setAttribute("value", 1);
+
+        let stockMeterT: any = document.querySelector('#stockMeterT').getAttribute("value");
+        let amountMissingTomato: number = 1000 - stockMeterT * 1000;
+        storageLeft.tomato += amountMissingTomato;
+        
+        let t: any = document.querySelector('#stockMeterT');
+        t.setAttribute("value", 1);
+
+        let stockMeterL: any = document.querySelector('#stockMeterL').getAttribute("value");
+        let amountMissingLettuce: number = 1000 - stockMeterL * 1000;
+        storageLeft.lettuce += amountMissingLettuce;
+        
+        let l: any = document.querySelector('#stockMeterL');
+        l.setAttribute("value", 1);
+
+        let stockMeterO: any = document.querySelector('#stockMeterO').getAttribute("value");
+        let amountMissingOnion: number = 1000 - stockMeterO * 1000;
+        storageLeft.onion += amountMissingOnion;
+        
+        let o: any = document.querySelector('#stockMeterO');
+        o.setAttribute("value", 1);
+
+        let stockMeterM: any = document.querySelector('#stockMeterM').getAttribute("value");
+        let amountMissingMeat: number = 1000 - stockMeterM * 1000;
+        storageLeft.meat += amountMissingMeat;
+        
+        let m: any = document.querySelector('#stockMeterM');
+        m.setAttribute("value", 1);
     }
 
     function createWorker(): void {
