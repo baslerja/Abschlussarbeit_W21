@@ -4,13 +4,14 @@ var Döner_Trainer;
     // enum TASK {
     //     COOK,
     //     RESTOCKING,
-    //     WAITING,
+    //     WAITING, RESTING
     // }
     class Worker extends Döner_Trainer.Human {
-        //mood: string[] = ["bored", "stressed", "sleeping"];
         constructor(_position, _x, _y) {
             super(_position);
             this.position = new Döner_Trainer.Vector(_x, _y);
+            this.velocity = new Döner_Trainer.Vector(0, 0);
+            this.velocity.set(30, 0);
         }
         move(_timeslice) {
             let offset = new Döner_Trainer.Vector(this.velocity.x, this.velocity.y);
@@ -21,6 +22,20 @@ var Döner_Trainer;
             //     case TASK.RESTOCKING:
             //     case TASK.WAITING:
             // }
+        }
+        feel(_mood) {
+            if (_mood == "happy") {
+                Döner_Trainer.crc2.save();
+                Döner_Trainer.crc2.translate(this.position.x, this.position.y);
+            }
+            if (_mood == "sleepy") {
+                Döner_Trainer.crc2.save();
+                Döner_Trainer.crc2.translate(this.position.x, this.position.y);
+            }
+            if (_mood == "stressed") {
+                Döner_Trainer.crc2.save();
+                Döner_Trainer.crc2.translate(this.position.x, this.position.y);
+            }
         }
         draw() {
             Döner_Trainer.crc2.save();

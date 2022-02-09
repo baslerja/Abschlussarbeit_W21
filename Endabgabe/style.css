@@ -15,7 +15,7 @@ header {
     display: block;
 }
 
-#buyBread, #buyTomato, #buyLettuce, #buyOnion, #buyMeat {
+#breadStock, #tomatoStock, #lettuceStock, #onionStock, #meatStock {
     margin-bottom: 20px;
 }
 

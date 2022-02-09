@@ -29,5 +29,10 @@ namespace Döner_Trainer {
             this.set(Math.cos(direction), Math.sin(direction));
             this.scale(length);
         }
+
+        public copy(): Vector {
+            let copy: Vector = new Vector(this.x, this.y);
+            return (copy);
+        }
     }
 }

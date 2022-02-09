@@ -6,13 +6,46 @@ Datum:
 Quellen: Zusammenarbeit mit Fiona Virnich
 */
 namespace Döner_Trainer {
+    window.addEventListener("load", handleLoad);
+
     export interface Vector {
         x: number;
         y: number;
     }
 
-    window.addEventListener("load", handleLoad);
+    interface Storage {
+        bread: number;
+        tomato: number;
+        lettuce: number;
+        onion: number;
+        meat: number;
+    }
 
+    let storageLeft: Storage = {
+        bread: 1000,
+        tomato: 1000,
+        lettuce: 1000,
+        onion: 1000,
+        meat: 1000,
+    };
+
+    interface Counter {
+        bread: number;
+        tomato: number;
+        lettuce: number;
+        onion: number;
+        meat: number;
+    }
+
+    let counterLeft: Counter = {
+        bread: 80,
+        tomato: 80,
+        lettuce: 80,
+        onion: 80,
+        meat: 80,
+    };
+
+    let imgageData: ImageData;
     export let crc2: CanvasRenderingContext2D;
 
     let workers: Worker[] = [];
@@ -30,8 +63,8 @@ namespace Döner_Trainer {
         let resetBtn: HTMLElement = <HTMLElement>document.querySelector("#resetBtn");
         resetBtn.addEventListener("click", handleLoad);
 
-        let refillBread: HTMLElement = <HTMLElement>document.querySelector("#refillBread");
-        refillBread.addEventListener("click", refillBreadCon);
+        let buyBtn: HTMLElement = <HTMLElement>document.querySelector("#buyIngredients");
+        buyBtn.addEventListener("click", buyIngredients);
 
         drawBackground();
         drawWarehouse();
@@ -40,12 +73,8 @@ namespace Döner_Trainer {
         //drawWorker({ x: 250, y: 300 });
         //drawCustomer({ x: 600, y: 300 });
 
-        //imageData = crc2.getImageData(0, 0, 800, 600);
+        imgageData = crc2.getImageData(0, 0, crc2.canvas.width, crc2.canvas.height);
         //window.setInterval(update, 20);
-    }
-
-    function refillBreadCon(): void {
-
     }
 
     function startGame(): void {
@@ -53,27 +82,51 @@ namespace Döner_Trainer {
 
         const form = document.querySelector('form')!;
         const data = new FormData(form);
+        const amountStock = data.get('warehouse') as string;
+        let stock: number = parseInt(amountStock + Math.floor);    //string in number parsen
+        storageLeft.bread = storageLeft.tomato = storageLeft.lettuce = storageLeft.onion = storageLeft.meat = stock;
 
-        //Get amount workers
+        createWorker();
+        createCustomer();
+    }
+
+    function update(): void {
+        console.log();
+
+        drawBackground();
+        drawWarehouse();
+        drawContainer();
+        drawCashRegister();
+
+        createCustomer();
+    }
+
+    function createWorker(): void {
+        const form = document.querySelector('form')!;
+        const data = new FormData(form);
 
         const amountStaff = data.get('amountStaff') as string;    //form Data anzahl worker als string holen
         let staff: number = parseInt(amountStaff);
 
         for (let i = 0; i < staff; i++) {      //solange index kleiner als anzahl worker ist soll ein neuer worker erstellt werden
-            let randomX: number = Math.random() * 600 + 1 + Math.random() * 400 + 100;
-            let worker: Human = new Worker(1, randomX, 300);
+            let worker: Human = new Worker();
+            worker.feel("happy");
             worker.draw();
             workers.push(worker);
         }
+    }
 
-        //Get amount customers
+    function createCustomer(): void {
+        const form = document.querySelector('form')!;
+        const data = new FormData(form);
 
-        const amountCustomer = data.get('amountCustomer') as string;    //form Data anzahl worker als string holen
-        let customer: number = parseInt(amountCustomer);
+        const amountCustomer = data.get('amountCustomers') as string;    //form Data anzahl worker als string holen
+        let amountC: number = parseInt(amountCustomer);
 
-        for (let i = 0; i < customer; i++) {      //solange index kleiner als anzahl worker ist soll ein neuer worker erstellt werden
-            let randomX: number = Math.random() * 600 + 1 + Math.random() * 400 + 100;
-            let customer: Human = new Customer(1, randomX, 200);
+        for (let i = 0; i < amountC; i++) {
+            let customer: Human = new Customer();
+            customer.move(1 / 50);
+            customer.feel("happy");
             customer.draw();
             customers.push(customer);
         }

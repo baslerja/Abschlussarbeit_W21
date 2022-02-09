@@ -43,11 +43,11 @@
 
         <fieldset>
             <p>Capacity warehouse:</p>
-            <input type="radio" id="" name="warehouse" value="warehouseLow" checked>
+            <input type="radio" id="stockLow" name="warehouse" value="warehouseLow" checked>
             <label for="warehouseLow">low</label>
-            <input type="radio" id="" name="warehouse" value="warehouseMedium">
+            <input type="radio" id="stockMedium" name="warehouse" value="warehouseMedium">
             <label for="warehouseMedium">medium</label>
-            <input type="radio" id="" name="warehouse" value="warehouseHigh">
+            <input type="radio" id="stockHigh" name="warehouse" value="warehouseHigh">
             <label for="warehouseHigh">high</label><br>
 
             <p>Capacity containers:</p>
@@ -73,23 +73,20 @@
     <section class="sec1">
         <div id="breadStock">Bread <meter id="stockMeterB" value="0.8"></meter>
         </div> 
-        <button id="buyBread" class="buyBtn">buy new</button><br>
 
         <div id="tomatoStock">Tomato <meter id="stockMeterT" value="0.8"></meter>
         </div>
-        <button id="buyTomato">buy new</button>
 
         <div id="lettuceStock">Lettuce <meter id="stockMeterL" value="0.8"></meter>
         </div>
-        <button id="buyLettuce">buy new</button>
         
         <div id="onionStock">Onion <meter id="stockMeterO" value="0.8"></meter>
         </div>
-        <button id="buyOnion">buy new</button>
 
         <div id="meatStock">Meat <meter id="stockMeterM" value="0.8"></meter>
         </div>
-        <button id="buyMeat">buy new</button>
+
+        <button id="buyIngredients">buy more ingredients</button>
     </section>
 
     <canvas width="800" height="600"></canvas>

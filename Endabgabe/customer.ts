@@ -14,9 +14,14 @@ namespace Döner_Trainer {
             super(_position);
 
             this.position = new Vector(_x, _y);
+            this.velocity = new Vector(0, 0);
+            this.velocity.set(75, 0);
         }
 
         move(_timeslice: number): void {
+            let offset: Vector = new Vector(this.velocity.x, this.velocity.y);
+            offset.scale(_timeslice);
+            this.position.add(offset);
 
             // switch () {
             //     case ACTION.INLINE:
@@ -25,6 +30,20 @@ namespace Döner_Trainer {
 
             //     case ACTION.LEAVING:
             // }
+        }
+
+        feel(_mood: string): void {
+            if (_mood == "happy") {
+                crc2.save();
+                crc2.translate(this.position.x, this.position.y);
+
+            }
+
+            if (_mood == "angry") {
+                crc2.save();
+                crc2.translate(this.position.x, this.position.y);
+
+            }
         }
 
         draw(): void {

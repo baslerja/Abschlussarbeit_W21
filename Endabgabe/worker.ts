@@ -3,17 +3,17 @@ namespace Döner_Trainer {
     // enum TASK {
     //     COOK,
     //     RESTOCKING,
-    //     WAITING,
+    //     WAITING, RESTING
     // }
 
     export class Worker extends Human {
 
-        //mood: string[] = ["bored", "stressed", "sleeping"];
-
-        constructor(_position: Vector, _x: number, _y: number) {
+        constructor(_position: Vector, _x: number, _y: number ) {
             super(_position);
 
             this.position = new Vector(_x, _y);
+            this.velocity = new Vector(0, 0);
+            this.velocity.set(30, 0);
         }
 
         move(_timeslice: number): void {
@@ -29,6 +29,26 @@ namespace Döner_Trainer {
             //     case TASK.WAITING:
             // }
 
+        }
+
+        feel(_mood: string): void {
+            if (_mood == "happy") {
+                crc2.save();
+                crc2.translate(this.position.x, this.position.y);
+
+            }
+
+            if (_mood == "sleepy") {
+                crc2.save();
+                crc2.translate(this.position.x, this.position.y);
+
+            }
+
+            if (_mood == "stressed") {
+                crc2.save();
+                crc2.translate(this.position.x, this.position.y);
+
+            }
         }
 
         draw(): void {

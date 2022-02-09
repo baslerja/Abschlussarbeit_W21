@@ -9,6 +9,21 @@ Quellen: Zusammenarbeit mit Fiona Virnich
 var Döner_Trainer;
 (function (Döner_Trainer) {
     window.addEventListener("load", handleLoad);
+    let storageLeft = {
+        bread: 1000,
+        tomato: 1000,
+        lettuce: 1000,
+        onion: 1000,
+        meat: 1000,
+    };
+    let counterLeft = {
+        bread: 80,
+        tomato: 80,
+        lettuce: 80,
+        onion: 80,
+        meat: 80,
+    };
+    let imgageData;
     let workers = [];
     let customers = [];
     function handleLoad(_event) {
@@ -20,38 +35,56 @@ var Döner_Trainer;
         startBtn.addEventListener("click", startGame);
         let resetBtn = document.querySelector("#resetBtn");
         resetBtn.addEventListener("click", handleLoad);
-        let refillBread = document.querySelector("#refillBread");
-        refillBread.addEventListener("click", refillBreadCon);
+        let buyBtn = document.querySelector("#buyIngredients");
+        buyBtn.addEventListener("click", buyIngredients);
         drawBackground();
         drawWarehouse();
         drawContainer();
         drawCashRegister();
         //drawWorker({ x: 250, y: 300 });
         //drawCustomer({ x: 600, y: 300 });
-        //imageData = crc2.getImageData(0, 0, 800, 600);
+        imgageData = Döner_Trainer.crc2.getImageData(0, 0, Döner_Trainer.crc2.canvas.width, Döner_Trainer.crc2.canvas.height);
         //window.setInterval(update, 20);
-    }
-    function refillBreadCon() {
     }
     function startGame() {
         console.log("start Game");
         const form = document.querySelector('form');
         const data = new FormData(form);
-        //Get amount workers
+        const amountStock = data.get('warehouse');
+        let stock = parseInt(amountStock + Math.floor); //string in number parsen
+        storageLeft.bread = storageLeft.tomato = storageLeft.lettuce = storageLeft.onion = storageLeft.meat = stock;
+        createWorker();
+        createCustomer();
+    }
+    function update() {
+        console.log();
+        drawBackground();
+        drawWarehouse();
+        drawContainer();
+        drawCashRegister();
+        createCustomer();
+    }
+    function createWorker() {
+        const form = document.querySelector('form');
+        const data = new FormData(form);
         const amountStaff = data.get('amountStaff'); //form Data anzahl worker als string holen
         let staff = parseInt(amountStaff);
         for (let i = 0; i < staff; i++) { //solange index kleiner als anzahl worker ist soll ein neuer worker erstellt werden
-            let randomX = Math.random() * 600 + 1 + Math.random() * 400 + 100;
-            let worker = new Döner_Trainer.Worker(1, randomX, 300);
+            let worker = new Döner_Trainer.Worker();
+            worker.feel("happy");
             worker.draw();
             workers.push(worker);
         }
-        //Get amount customers
-        const amountCustomer = data.get('amountCustomer'); //form Data anzahl worker als string holen
-        let customer = parseInt(amountCustomer);
-        for (let i = 0; i < customer; i++) { //solange index kleiner als anzahl worker ist soll ein neuer worker erstellt werden
-            let randomX = Math.random() * 600 + 1 + Math.random() * 400 + 100;
-            let customer = new Döner_Trainer.Customer(1, randomX, 200);
+    }
+    function createCustomer() {
+        const form = document.querySelector('form');
+        const data = new FormData(form);
+        const amountCustomer = data.get('amountCustomers'); //form Data anzahl worker als string holen
+        let amountC = parseInt(amountCustomer);
+        for (let i = 0; i < amountC; i++) {
+            let customer = new Döner_Trainer.Customer();
+            customer.move(1 / 50);
+            customer.feel("happy");
             customer.draw();
             customers.push(customer);
         }

@@ -11,11 +11,10 @@ var Döner_Trainer;
         move(_timeslice) {
             console.log("Human move");
         }
-        feel(_mood) {
-            console.log("Human feel");
-        }
         draw() {
             console.log("Human draw");
+        }
+        feel(_mood) {
         }
     }
     Döner_Trainer.Human = Human;

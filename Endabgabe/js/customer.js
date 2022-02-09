@@ -11,13 +11,28 @@ var Döner_Trainer;
         constructor(_position, _x, _y) {
             super(_position);
             this.position = new Döner_Trainer.Vector(_x, _y);
+            this.velocity = new Döner_Trainer.Vector(0, 0);
+            this.velocity.set(75, 0);
         }
         move(_timeslice) {
+            let offset = new Döner_Trainer.Vector(this.velocity.x, this.velocity.y);
+            offset.scale(_timeslice);
+            this.position.add(offset);
             // switch () {
             //     case ACTION.INLINE:
             //     case ACTION.WAITING:
             //     case ACTION.LEAVING:
             // }
+        }
+        feel(_mood) {
+            if (_mood == "happy") {
+                Döner_Trainer.crc2.save();
+                Döner_Trainer.crc2.translate(this.position.x, this.position.y);
+            }
+            if (_mood == "angry") {
+                Döner_Trainer.crc2.save();
+                Döner_Trainer.crc2.translate(this.position.x, this.position.y);
+            }
         }
         draw() {
             Döner_Trainer.crc2.save();

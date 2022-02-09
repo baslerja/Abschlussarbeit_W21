@@ -1,3 +1,0 @@
-namespace Döner_Trainer {
-    
-}

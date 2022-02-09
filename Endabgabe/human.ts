@@ -12,12 +12,12 @@ namespace Döner_Trainer {
             console.log("Human move");
         }
 
-        feel(_mood: string): void {
-            console.log("Human feel");
-        }
-
         draw(): void {
             console.log("Human draw");
+        }
+
+        feel(_mood: string): void {
+
         }
     }
 }

@@ -25,6 +25,10 @@ var Döner_Trainer;
             this.set(Math.cos(direction), Math.sin(direction));
             this.scale(length);
         }
+        copy() {
+            let copy = new Vector(this.x, this.y);
+            return (copy);
+        }
     }
     Döner_Trainer.Vector = Vector;
 })(Döner_Trainer || (Döner_Trainer = {}));
