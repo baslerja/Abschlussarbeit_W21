@@ -42,29 +42,19 @@
         </fieldset>
 
         <fieldset>
-            <p>Capacity warehouse:</p>
-            <input type="radio" id="stockLow" name="warehouse" value="warehouseLow" checked>
-            <label for="warehouseLow">low</label>
-            <input type="radio" id="stockMedium" name="warehouse" value="warehouseMedium">
-            <label for="warehouseMedium">medium</label>
-            <input type="radio" id="stockHigh" name="warehouse" value="warehouseHigh">
-            <label for="warehouseHigh">high</label><br>
-
-            <p>Capacity containers:</p>
-            <input type="radio" id="" name="containers" value="containerLow" checked>
-            <label for="containerLow">low</label>
-            <input type="radio" id="" name="containers" value="containerMedium">
-            <label for="containerMedium">medium</label>
-            <input type="radio" id="" name="containers" value="containerHigh">
-            <label for="containerHigh">high</label>
+            <p>Capacity stock and containers:</p>
+            <select id="warehouse" name="warehouse">
+                <option value="20">20</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+            </select><br>
         </fieldset>
-
         <fieldset>
             <p>How long does a worker need to rest?</p>
-            <input type="radio" id="" name="breaks" value="eight" checked>
-            <label for="eight">8 seconds</label>
-            <input type="radio" id="" name="breaks" value="fifteen">
-            <label for="fifteen">15 seconds</label>
+            <input type="radio" id="" name="breaks" value="small" checked>
+            <label for="small">small breaks</label>
+            <input type="radio" id="" name="breaks" value="long">
+            <label for="long">longer breaks</label>
         </fieldset>
         <!-- <button type="button" id="resetBtn">Reset Game!</button> -->
         <button type="button" id="startBtn">Start Game!</button>

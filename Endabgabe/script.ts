@@ -116,6 +116,7 @@ namespace Döner_Trainer {
 
         const form = document.querySelector('form')!;
         const data = new FormData(form);
+        
         const amountStock = data.get('warehouse') as string;
         let stock: number = parseInt(amountStock + Math.floor);    //string in number parsen
         storageLeft.bread = storageLeft.tomato = storageLeft.lettuce = storageLeft.onion = storageLeft.meat = stock;
