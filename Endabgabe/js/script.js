@@ -37,6 +37,8 @@ var Döner_Trainer;
         resetBtn.addEventListener("click", handleLoad);
         let buyBtn = document.querySelector("#buyIngredients");
         buyBtn.addEventListener("click", buyIngredients);
+        // let refillBreadBtn: HTMLElement = <HTMLElement>document.querySelector("#refillBread");
+        // refillBreadBtn.addEventListener("click", refillBread);
         drawBackground();
         drawWarehouse();
         drawContainer();
@@ -60,10 +62,6 @@ var Döner_Trainer;
         const amountStock = data.get('warehouse');
         let stock = parseInt(amountStock + Math.floor); //string in number parsen
         storageLeft.bread = storageLeft.tomato = storageLeft.lettuce = storageLeft.onion = storageLeft.meat = stock;
-        let meterB = document.querySelector('#stockMeterB');
-        meterB.setAttribute("value", stock / 100);
-        storageLeft.bread = 10 * stock;
-        //const stressLevel = data.get('breaks') as string;
         createWorker();
         createCustomer();
     }
@@ -107,9 +105,12 @@ var Döner_Trainer;
         const data = new FormData(form);
         const amountStaff = data.get('amountStaff'); //form Data anzahl worker als string holen
         let staff = parseInt(amountStaff);
-        for (let i = 0; i < staff; i++) { //solange index kleiner als anzahl worker ist soll ein neuer worker erstellt werden
-            let worker = new Döner_Trainer.Worker();
-            worker.feel("happy");
+        for (let i = 0; i < staff; i++) {
+            let randomX = Math.random() * (350 - 150) + 150;
+            let randomY = Math.random() * (550 - 50) + 50;
+            let worker = new Döner_Trainer.Worker(1, randomX, randomY);
+            // worker.feel("happy");
+            worker.move(1 / 50);
             worker.draw();
             workers.push(worker);
         }
@@ -120,9 +121,11 @@ var Döner_Trainer;
         const amountCustomer = data.get('amountCustomers'); //form Data anzahl worker als string holen
         let amountC = parseInt(amountCustomer);
         for (let i = 0; i < amountC; i++) {
-            let customer = new Döner_Trainer.Customer();
+            let randomX = Math.random() * (750 - 550) + 550;
+            let randomY = Math.random() * (550 - 50) + 50;
+            let customer = new Döner_Trainer.Customer(1, randomX, randomY);
             customer.move(1 / 50);
-            customer.feel("happy");
+            // customer.feel("happy");
             customer.draw();
             customers.push(customer);
         }

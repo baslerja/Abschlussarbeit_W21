@@ -10,12 +10,12 @@ namespace Döner_Trainer {
 
         //mood: string[] = ["happy", "angry"];
 
-        constructor(_position: Vector, _x: number, _y: number) {
+        constructor(_position: number, _x: number, _y: number) {
             super(_position);
 
             this.position = new Vector(_x, _y);
             this.velocity = new Vector(0, 0);
-            this.velocity.set(75, 0);
+            // this.velocity.set();
         }
 
         move(_timeslice: number): void {
@@ -49,6 +49,7 @@ namespace Döner_Trainer {
         draw(): void {
 
             crc2.save();
+            crc2.resetTransform();
             crc2.translate(this.position.x, this.position.y);
             crc2.beginPath();
             crc2.arc(0, 0, 20, 0, 2 * Math.PI);

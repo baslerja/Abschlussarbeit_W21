@@ -2,7 +2,7 @@ body {
     display: grid;
     grid-template-columns: 20% 10% auto 10%;
     grid-template-rows: auto auto auto auto;
-    grid-column-gap: 20px;
+    grid-column-gap: 30px;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 

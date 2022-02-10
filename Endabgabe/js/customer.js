@@ -12,7 +12,7 @@ var Döner_Trainer;
             super(_position);
             this.position = new Döner_Trainer.Vector(_x, _y);
             this.velocity = new Döner_Trainer.Vector(0, 0);
-            this.velocity.set(75, 0);
+            // this.velocity.set();
         }
         move(_timeslice) {
             let offset = new Döner_Trainer.Vector(this.velocity.x, this.velocity.y);
@@ -36,6 +36,7 @@ var Döner_Trainer;
         }
         draw() {
             Döner_Trainer.crc2.save();
+            Döner_Trainer.crc2.resetTransform();
             Döner_Trainer.crc2.translate(this.position.x, this.position.y);
             Döner_Trainer.crc2.beginPath();
             Döner_Trainer.crc2.arc(0, 0, 20, 0, 2 * Math.PI);
