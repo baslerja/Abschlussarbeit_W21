@@ -1,14 +1,8 @@
 namespace Döner_Trainer {
 
-    // enum ACTION {
-    //     INLINE,
-    //     WAITING,
-    //     LEAVING,
-    // }
-
     export class Customer extends Human {
 
-        //mood: string[] = ["happy", "angry"];
+        myOrder: Storage;
 
         constructor(_position: number, _x: number, _y: number) {
             super(_position);
@@ -16,6 +10,7 @@ namespace Döner_Trainer {
             this.position = new Vector(_x, _y);
             this.velocity = new Vector(0, 0);
             // this.velocity.set();
+            this.myOrder = order();
         }
 
         move(_timeslice: number): void {
@@ -58,6 +53,22 @@ namespace Döner_Trainer {
             crc2.closePath();
             crc2.restore();
         }
-    }
 
+        function order(): Storage {
+        let guestOrder: Storage = {
+            bread: 1,
+            tomato: randomOrder(),
+            lettuce: randomOrder(),
+            onion: randomOrder(),
+            meat: randomOrder(),
+        }
+        return guestOrder;
+
+
+        function randomOrder(): number {
+
+            let random = Math.floor(Math.random() * (2 - 0 + 1)) + 0;
+            return random;
+        }
+    }
 }

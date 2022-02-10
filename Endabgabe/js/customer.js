@@ -1,18 +1,14 @@
 "use strict";
 var Döner_Trainer;
 (function (Döner_Trainer) {
-    // enum ACTION {
-    //     INLINE,
-    //     WAITING,
-    //     LEAVING,
-    // }
     class Customer extends Döner_Trainer.Human {
-        //mood: string[] = ["happy", "angry"];
+        myOrder;
         constructor(_position, _x, _y) {
             super(_position);
             this.position = new Döner_Trainer.Vector(_x, _y);
             this.velocity = new Döner_Trainer.Vector(0, 0);
             // this.velocity.set();
+            this.myOrder = order();
         }
         move(_timeslice) {
             let offset = new Döner_Trainer.Vector(this.velocity.x, this.velocity.y);
@@ -47,5 +43,19 @@ var Döner_Trainer;
         }
     }
     Döner_Trainer.Customer = Customer;
+    function order() {
+        let guestOrder = {
+            bread: 1,
+            tomato: randomOrder(),
+            lettuce: randomOrder(),
+            onion: randomOrder(),
+            meat: randomOrder(),
+        };
+        return guestOrder;
+        function randomOrder() {
+            let random = Math.floor(Math.random() * (2 - 0 + 1)) + 0;
+            return random;
+        }
+    }
 })(Döner_Trainer || (Döner_Trainer = {}));
 //# sourceMappingURL=customer.js.map

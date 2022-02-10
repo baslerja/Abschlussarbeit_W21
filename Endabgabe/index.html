@@ -11,8 +11,8 @@
     <script src="js/worker.js"></script>
     <script src="js/customer.js"></script>
     <script src="js/container.js"></script>
+    <script src="js/ingredient.js"></script>
     <script src="js/vector.js"></script>
-    <script src="js/ingredients.js"></script>
     <link rel="stylesheet" href="style.css">
 </head>
 
@@ -33,7 +33,7 @@
                 <option value="3">3</option>
             </select><br>
 
-            <p>Select the amount of customers per TIME:</p>
+            <p>Select the amount of customers per minute:</p>
             <select id="amountCustomers" name="amountCustomers">
                 <option value="1">1</option>
                 <option value="2">2</option>
@@ -66,7 +66,7 @@
             <input type="radio" id="" name="breaks" value="fifteen">
             <label for="fifteen">15 seconds</label>
         </fieldset>
-        <button type="button" id="resetBtn">Reset Game!</button>
+        <!-- <button type="button" id="resetBtn">Reset Game!</button> -->
         <button type="button" id="startBtn">Start Game!</button>
     </form>
 
@@ -95,23 +95,30 @@
         <div id="bread">Bread <meter id="meterB" value="0.8"></meter>
         </div>
         <button class="refill" id="refillBread">refill</button>
+        <button type="button" id="addB">add bread</button>
 
         <div  id="tomato">Tomato <meter id="meterT" value="0.8"></meter>
         </div>
         <button class="refill" id="refillTomato">refill</button>
+        <button type="button" id="addT">add tomato</button>
 
         <div id="lettuce">Lettuce <meter id="meterL" value="0.8"></meter>
         </div>
         <button class="refill" id="refillLettuce">refill</button>
+        <button type="button" id="addL">add lettuce</button>
 
         <div id="onion">Onion <meter id="meterO" value="0.8"></meter>
         </div>
         <button class="refill" id="refillOnion">refill</button>
+        <button type="button" id="addO">add onion</button>
 
         <div id="meat">Meat <meter id="meterM" value="0.8"></meter>
         </div>
         <button class="refill" id="refillMeat">refill</button>
+        <button type="button" id="addM">add meat</button>
     </section>
+
+    <button type="button" id="pay">Receive order</button>
      
 </body>
 

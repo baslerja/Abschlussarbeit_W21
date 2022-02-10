@@ -13,7 +13,7 @@ namespace Döner_Trainer {
         y: number;
     }
 
-    interface Storage {
+    export interface Storage {
         bread: number;
         tomato: number;
         lettuce: number;
@@ -21,7 +21,7 @@ namespace Döner_Trainer {
         meat: number;
     }
 
-    let storageLeft: Storage = {
+    export let storageLeft: Storage = {
         bread: 1000,
         tomato: 1000,
         lettuce: 1000,
@@ -29,7 +29,7 @@ namespace Döner_Trainer {
         meat: 1000,
     };
 
-    interface Counter {
+    export interface Counter {
         bread: number;
         tomato: number;
         lettuce: number;
@@ -37,7 +37,7 @@ namespace Döner_Trainer {
         meat: number;
     }
 
-    let counterLeft: Counter = {
+    export let counterLeft: Counter = {
         bread: 80,
         tomato: 80,
         lettuce: 80,
@@ -45,11 +45,21 @@ namespace Döner_Trainer {
         meat: 80,
     };
 
-    let imgageData: ImageData;
+    export let currentOrder: Storage = {
+        bread: 0,
+        tomato: 0,
+        lettuce: 0,
+        onion: 0,
+        meat: 0,
+    };
+
+    let imageData: ImageData;
     export let crc2: CanvasRenderingContext2D;
 
     let workers: Worker[] = [];
     let customers: Customer[] = [];
+    let orders: Storage[] = [];
+    let ordersMade: Storage[] = [];
 
     function handleLoad(_event: Event): void {
         let canvas: HTMLCanvasElement | null = document.querySelector("canvas");
@@ -60,31 +70,43 @@ namespace Döner_Trainer {
         let startBtn: HTMLElement = <HTMLElement>document.querySelector("#startBtn");
         startBtn.addEventListener("click", startGame);
 
-        let resetBtn: HTMLElement = <HTMLElement>document.querySelector("#resetBtn");
-        resetBtn.addEventListener("click", handleLoad);
+        // let resetBtn: HTMLElement = <HTMLElement>document.querySelector("#resetBtn");
+        // resetBtn.addEventListener("click", handleLoad);
 
         let buyBtn: HTMLElement = <HTMLElement>document.querySelector("#buyIngredients");
         buyBtn.addEventListener("click", buyIngredients);
 
-        // let refillBreadBtn: HTMLElement = <HTMLElement>document.querySelector("#refillBread");
-        // refillBreadBtn.addEventListener("click", refillBread);
+        let payBtn: HTMLElement = <HTMLElement>document.querySelector("#pay");
+        payBtn.addEventListener("click", cashUpOrder);
 
         drawBackground();
         drawWarehouse();
         drawContainer();
         drawCashRegister();
-        //drawWorker({ x: 250, y: 300 });
-        //drawCustomer({ x: 600, y: 300 });
 
-        imgageData = crc2.getImageData(0, 0, crc2.canvas.width, crc2.canvas.height);
-        //window.setInterval(update, 20);
+        imageData = crc2.getImageData(0, 0, crc2.canvas.width, crc2.canvas.height);
+        window.setInterval(update, 20);
     }
 
-    function startGame(): void {
-        //console.log("start Game");
+    export function startGame(): void {
+        console.log("start Game");
+
+        document.querySelector("#addB")!.addEventListener("click", addBread);
+        document.querySelector("#addT")!.addEventListener("click", addTomato);
+        document.querySelector("#addL")!.addEventListener("click", addLettuce);
+        document.querySelector("#addO")!.addEventListener("click", addOnion);
+        document.querySelector("#addM")!.addEventListener("click", addMeat);
+
+        document.querySelector("#refillBread")!.addEventListener("click", refillBread);
+        document.querySelector("#refillTomato")!.addEventListener("click", refillTomato);
+        document.querySelector("#refillLettuce")!.addEventListener("click", refillLettuce);
+        document.querySelector("#refillOnion")!.addEventListener("click", refillOnion);
+        document.querySelector("#refillMeat")!.addEventListener("click", refillMeat);
 
         workers = [];
         customers = [];
+        orders = [];
+        ordersMade = [];
 
         counterLeft.bread = 80;
         counterLeft.tomato = 80;
@@ -98,56 +120,28 @@ namespace Döner_Trainer {
         let stock: number = parseInt(amountStock + Math.floor);    //string in number parsen
         storageLeft.bread = storageLeft.tomato = storageLeft.lettuce = storageLeft.onion = storageLeft.meat = stock;
 
+        let meterB: any = document.querySelector('#stockMeterB');
+        meterB.setAttribute("value", stock / 100);
+        storageLeft.bread = 10 * stock;
+
         createWorker();
         createCustomer();
     }
 
     function update(): void {
-        console.log();
+        crc2.putImageData(imageData, 1, 1);
 
-        drawBackground();
-        drawWarehouse();
-        drawContainer();
-        drawCashRegister();
+        for (let worker of workers) {
+            worker.move(1 / 50);
+            worker.draw();
+            worker.feel("neutral");
+        }
 
-        createCustomer();
-    }
-    
-    function buyIngredients(): void {
-        let stockMeterB: any = document.querySelector('#stockMeterB').getAttribute("value");
-        let amountMissingBread: number = 1000 - stockMeterB * 1000;
-        storageLeft.bread += amountMissingBread;
-        
-        let b: any = document.querySelector('#stockMeterB');
-        b.setAttribute("value", 1);
-
-        let stockMeterT: any = document.querySelector('#stockMeterT').getAttribute("value");
-        let amountMissingTomato: number = 1000 - stockMeterT * 1000;
-        storageLeft.tomato += amountMissingTomato;
-        
-        let t: any = document.querySelector('#stockMeterT');
-        t.setAttribute("value", 1);
-
-        let stockMeterL: any = document.querySelector('#stockMeterL').getAttribute("value");
-        let amountMissingLettuce: number = 1000 - stockMeterL * 1000;
-        storageLeft.lettuce += amountMissingLettuce;
-        
-        let l: any = document.querySelector('#stockMeterL');
-        l.setAttribute("value", 1);
-
-        let stockMeterO: any = document.querySelector('#stockMeterO').getAttribute("value");
-        let amountMissingOnion: number = 1000 - stockMeterO * 1000;
-        storageLeft.onion += amountMissingOnion;
-        
-        let o: any = document.querySelector('#stockMeterO');
-        o.setAttribute("value", 1);
-
-        let stockMeterM: any = document.querySelector('#stockMeterM').getAttribute("value");
-        let amountMissingMeat: number = 1000 - stockMeterM * 1000;
-        storageLeft.meat += amountMissingMeat;
-        
-        let m: any = document.querySelector('#stockMeterM');
-        m.setAttribute("value", 1);
+        for (let customer of customers) {
+            customer.move(1 / 50);
+            customer.draw();
+            customer.feel("sad");
+        }
     }
 
     function createWorker(): void {
@@ -157,7 +151,7 @@ namespace Döner_Trainer {
         const amountStaff = data.get('amountStaff') as string;    //form Data anzahl worker als string holen
         let staff: number = parseInt(amountStaff);
 
-        for (let i = 0; i < staff; i++) { 
+        for (let i = 0; i < staff; i++) {
             let randomX: number = Math.random() * (350 - 150) + 150;
             let randomY: number = Math.random() * (550 - 50) + 50;
             let worker: Human = new Worker(1, randomX, randomY);
@@ -179,10 +173,31 @@ namespace Döner_Trainer {
             let randomX: number = Math.random() * (750 - 550) + 550;
             let randomY: number = Math.random() * (550 - 50) + 50;
             let customer: Human = new Customer(1, randomX, randomY);
+            orders.push(customer.myOrder)
             customer.move(1 / 50);
             // customer.feel("happy");
             customer.draw();
             customers.push(customer);
+
+            console.log(" Order of Customer: ")
+            console.log(customer.myOrder);
+        }
+    }
+
+    function cashUpOrder(): any {
+
+        ordersMade.push(currentOrder);
+        console.log(currentOrder);
+
+        if (ordersMade[0] == orders[0]) {
+            customers[0].feel("happy");
+            console.log(ordersMade[0]);
+            console.log("order was right");
+
+        } else {
+            customers[0].feel("sad");
+            console.log("order was wrong");
+            console.log(ordersMade[0]);
         }
     }
 
@@ -345,7 +360,7 @@ namespace Döner_Trainer {
     }
 
     function drawCashRegister(): void {
-        console.log("cash");
+        //console.log("cash");
 
         crc2.save();
 
