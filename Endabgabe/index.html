@@ -57,7 +57,8 @@
             <label for="long">longer breaks</label>
         </fieldset>
         <!-- <button type="button" id="resetBtn">Reset Game!</button> -->
-        <button type="button" id="startBtn">Start Game!</button>
+        <button type="button" id="startBtn">Start Game!</button><br>
+        <button type="button" id="pay">Check Order!</button>
     </form>
 
     <section class="sec1">
@@ -82,6 +83,11 @@
     <canvas width="800" height="600"></canvas>
 
     <section class="sec2" class="chartWrapper">
+        <div id="displayOrder">
+            <h2>Your current orders</h2>
+            <div id="info"></div>
+        </div>
+
         <div id="bread">Bread <meter id="meterB" value="0.8"></meter>
         </div>
         <button class="refill" id="refillBread">refill</button>
@@ -107,9 +113,7 @@
         <button class="refill" id="refillMeat">refill</button>
         <button type="button" id="addM">add meat</button>
     </section>
-
-    <button type="button" id="pay">Receive order</button>
-     
+    
 </body>
 
 </html>

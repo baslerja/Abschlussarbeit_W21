@@ -30,11 +30,13 @@ var Döner_Trainer;
         onion: 0,
         meat: 0,
     };
+    let info = document.querySelector("#info");
     let imageData;
     let workers = [];
     let customers = [];
     let orders = [];
     let ordersMade = [];
+    let displayOrders = [];
     function handleLoad(_event) {
         let canvas = document.querySelector("canvas");
         if (!canvas)
@@ -47,7 +49,7 @@ var Döner_Trainer;
         drawContainer();
         drawCashRegister();
         imageData = Döner_Trainer.crc2.getImageData(0, 0, Döner_Trainer.crc2.canvas.width, Döner_Trainer.crc2.canvas.height);
-        //window.setInterval(update, 20);
+        window.setInterval(update, 20);
     }
     function startGame() {
         console.log("start Game");
@@ -98,8 +100,12 @@ var Döner_Trainer;
         // console.log("Stresslevel Worker: " + stressLevel);
         createWorker();
         createCustomer();
+        buildCustomers(data);
     }
     Döner_Trainer.startGame = startGame;
+    setTimeout(function () {
+        alert("Game Over!" + " Reload page to start a new game.");
+    }, 90000); //wait 90 seconds
     function update() {
         Döner_Trainer.crc2.putImageData(imageData, 1, 1);
         for (let worker of workers) {
@@ -145,19 +151,88 @@ var Döner_Trainer;
             console.log(" Order of Customer: ");
             console.log(customer.myOrder);
         }
+        console.log(" Order of Customer: ");
+        console.log(customer.myOrder);
+        // info.innerHTML = " ";
+        let firstOrder = "Ich hätte gerne einen Döner mit " + customer.myOrder.tomato + " Tomaten, " + customer.myOrder.lettuce + " mal Kraut, " + customer.myOrder.onion + " Zwiebeln und " + customer.myOrder.meat + " Fleisch." + "<br> ";
+        displayOrders.push(firstOrder);
+        info.innerHTML = displayOrders;
+    }
+    async function buildCustomers(data) {
+        const amountCostumer = data.get('amountCostumer'); //form Data anzahl worker als string holen
+        let amountC = parseInt(amountCostumer);
+        for (let index = 0; index < amountC; index++) { //solange index kleiner als anzahl costumer ist soll ein neuer costumer erstellt werden
+            await new Promise(f => setTimeout(f, 6000 /* / amountC */)); // Math.floor(Math.random() * (60000 - 1000 + 1)) + 1000  
+            createCostumer();
+        }
+    }
+    function createCostumer() {
+        // console.log('new customer created'); 
+        let customer = new Döner_Trainer.Customer(1, 830, 380);
+        orders.push(customer.myOrder);
+        //customer.feel(moodCustomer[0]);
+        customer.draw();
+        customers.push(customer);
+        customer.move(1 / 50);
+        console.log(" Order of Customer: ");
+        console.log(customer.myOrder);
+        // info.innerHTML = " ";
+        let firstOrder = "Ich hätte gerne einen Döner mit " + customer.myOrder.tomato + " Tomaten, " + customer.myOrder.lettuce + " mal Kraut, " + customer.myOrder.onion + " Zwiebeln und " + customer.myOrder.meat + " Fleisch." + "<br> ";
+        displayOrders.push(firstOrder);
+        info.innerHTML = displayOrders;
+        //console.log(1 + index + " customers erstellt");
+        //console.log("c position = " + customer.position.x + " and " + customer.position.y);
     }
     function cashUpOrder() {
         ordersMade.push(Döner_Trainer.currentOrder);
         console.log(Döner_Trainer.currentOrder);
-        if (ordersMade[0] == orders[0]) {
+        console.log(ordersMade[0]);
+        if (ordersMade[0].bread == orders[0].bread && ordersMade[0].lettuce == orders[0].lettuce && ordersMade[0].meat == orders[0].meat
+            && ordersMade[0].onion == orders[0].onion && ordersMade[0].tomato == orders[0].tomato) {
+            // if (currentOrder == orders[0]) {
+            // debugger;
             customers[0].feel("happy");
-            console.log(ordersMade[0]);
             console.log("order was right");
+            console.log("länge davor: " + customers.length + " " + ordersMade.length + " " + orders.length);
+            ordersMade.shift();
+            orders.shift();
+            displayOrders.shift();
+            setTimeout(function () {
+                customers.shift();
+                console.log("Thank you! Bye.");
+            }, 3000);
+            info.innerHTML = "";
+            info.innerHTML += displayOrders;
+            console.log("länge danach: " + customers.length + " " + ordersMade.length + " " + orders.length);
+            Döner_Trainer.currentOrder.bread = 0;
+            Döner_Trainer.currentOrder.tomato = 0;
+            Döner_Trainer.currentOrder.lettuce = 0;
+            Döner_Trainer.currentOrder.onion = 0;
+            Döner_Trainer.currentOrder.meat = 0;
         }
         else {
-            customers[0].feel("sad");
+            // debugger;
+            customers[0].draw();
+            //customers[0].feel(moodCustomer[1]);
             console.log("order was wrong");
             console.log(ordersMade[0]);
+            console.log("länge davor: " + customers.length + " " + ordersMade.length + " " + orders.length);
+            ordersMade.shift();
+            orders.shift();
+            displayOrders.shift();
+            setTimeout(function () {
+                customers.shift();
+                console.log("That was not what I've ordered! I'm leaving.");
+            }, 3000);
+            // let info: any = document.querySelector("#info");
+            info.innerHTML = "";
+            info.innerHTML += displayOrders;
+            console.log("länge danach: " + customers.length + " " + ordersMade.length + " " + orders.length);
+            Döner_Trainer.currentOrder.bread = 0;
+            Döner_Trainer.currentOrder.tomato = 0;
+            Döner_Trainer.currentOrder.lettuce = 0;
+            Döner_Trainer.currentOrder.onion = 0;
+            Döner_Trainer.currentOrder.meat = 0;
         }
     }
     function drawBackground() {

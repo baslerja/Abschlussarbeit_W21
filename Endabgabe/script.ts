@@ -53,6 +53,8 @@ namespace Döner_Trainer {
         meat: 0,
     };
 
+    let info: any = document.querySelector("#info");
+
     let imageData: ImageData;
     export let crc2: CanvasRenderingContext2D;
 
@@ -60,6 +62,7 @@ namespace Döner_Trainer {
     let customers: Customer[] = [];
     let orders: Storage[] = [];
     let ordersMade: Storage[] = [];
+    let displayOrders: string[] = [];
 
     function handleLoad(_event: Event): void {
         let canvas: HTMLCanvasElement | null = document.querySelector("canvas");
@@ -76,7 +79,7 @@ namespace Döner_Trainer {
         drawCashRegister();
 
         imageData = crc2.getImageData(0, 0, crc2.canvas.width, crc2.canvas.height);
-        //window.setInterval(update, 20);
+        window.setInterval(update, 20);
     }
 
     export function startGame(): void {
@@ -139,7 +142,13 @@ namespace Döner_Trainer {
 
         createWorker();
         createCustomer();
+        buildCustomers(data);
     }
+
+    setTimeout(function () {
+        alert("Game Over!" + " Reload page to start a new game.");
+
+    }, 90000);//wait 90 seconds
 
     function update(): void {
         crc2.putImageData(imageData, 1, 1);
@@ -173,6 +182,8 @@ namespace Döner_Trainer {
             worker.draw();
             workers.push(worker);
         }
+
+        
     }
 
     function createCustomer(): void {
@@ -195,22 +206,113 @@ namespace Döner_Trainer {
             console.log(" Order of Customer: ")
             console.log(customer.myOrder);
         }
+
+        console.log(" Order of Customer: ")
+        console.log(customer.myOrder);
+
+
+        // info.innerHTML = " ";
+        let firstOrder: string = "Ich hätte gerne einen Döner mit " + customer.myOrder.tomato + " Tomaten, " + customer.myOrder.lettuce + " mal Kraut, " + customer.myOrder.onion + " Zwiebeln und " + customer.myOrder.meat + " Fleisch." + "<br> ";
+        displayOrders.push(firstOrder);
+        info.innerHTML = displayOrders;
+    }
+
+    async function buildCustomers(data: FormData) {
+        const amountCostumer = data.get('amountCostumer') as string;    //form Data anzahl worker als string holen
+        let amountC: number = parseInt(amountCostumer);
+
+        for (let index = 0; index < amountC; index++) {      //solange index kleiner als anzahl costumer ist soll ein neuer costumer erstellt werden
+            await new Promise(f => setTimeout(f, 6000 /* / amountC */));     // Math.floor(Math.random() * (60000 - 1000 + 1)) + 1000  
+            createCostumer();
+        }
+    }
+
+    function createCostumer(): any {
+
+        // console.log('new customer created'); 
+        let customer: Customer = new Customer(1, 830, 380);
+        orders.push(customer.myOrder)
+        //customer.feel(moodCustomer[0]);
+        customer.draw();
+        customers.push(customer);
+        customer.move(1 / 50);
+
+        console.log(" Order of Customer: ")
+        console.log(customer.myOrder);
+
+
+        // info.innerHTML = " ";
+        let firstOrder: string = "Ich hätte gerne einen Döner mit " + customer.myOrder.tomato + " Tomaten, " + customer.myOrder.lettuce + " mal Kraut, " + customer.myOrder.onion + " Zwiebeln und " + customer.myOrder.meat + " Fleisch." + "<br> ";
+        displayOrders.push(firstOrder);
+        info.innerHTML = displayOrders;
+        //console.log(1 + index + " customers erstellt");
+        //console.log("c position = " + customer.position.x + " and " + customer.position.y);
+
     }
 
     function cashUpOrder(): any {
 
         ordersMade.push(currentOrder);
         console.log(currentOrder);
+        console.log(ordersMade[0]);
 
-        if (ordersMade[0] == orders[0]) {
+        if (ordersMade[0].bread == orders[0].bread && ordersMade[0].lettuce == orders[0].lettuce && ordersMade[0].meat == orders[0].meat
+            && ordersMade[0].onion == orders[0].onion && ordersMade[0].tomato == orders[0].tomato) {
+            // if (currentOrder == orders[0]) {
+            // debugger;
             customers[0].feel("happy");
-            console.log(ordersMade[0]);
+
             console.log("order was right");
+            console.log("länge davor: " + customers.length + " " + ordersMade.length + " " + orders.length);
+            
+
+            ordersMade.shift();
+            orders.shift();
+            displayOrders.shift();
+            setTimeout(function(){
+                customers.shift();
+                console.log("Thank you! Bye."); 
+    
+           },3000)
+
+            info.innerHTML = "";
+            info.innerHTML += displayOrders;
+            console.log("länge danach: " + customers.length + " " + ordersMade.length + " " + orders.length);
+            currentOrder.bread = 0;
+            currentOrder.tomato = 0;
+            currentOrder.lettuce = 0;
+            currentOrder.onion = 0;
+            currentOrder.meat = 0;
+
 
         } else {
-            customers[0].feel("sad");
+            // debugger;
+            customers[0].draw();
+            //customers[0].feel(moodCustomer[1]);
+            
             console.log("order was wrong");
             console.log(ordersMade[0]);
+            console.log("länge davor: " + customers.length + " " + ordersMade.length + " " + orders.length);
+            
+            ordersMade.shift();
+            orders.shift();
+            displayOrders.shift();
+
+            setTimeout(function(){
+                customers.shift();
+                console.log("That was not what I've ordered! I'm leaving."); 
+    
+           },3000)
+            // let info: any = document.querySelector("#info");
+            info.innerHTML = "";
+            info.innerHTML += displayOrders;
+            console.log("länge danach: " + customers.length + " " + ordersMade.length + " " + orders.length);
+            currentOrder.bread = 0;
+            currentOrder.tomato = 0;
+            currentOrder.lettuce = 0;
+            currentOrder.onion = 0;
+            currentOrder.meat = 0;
+
         }
     }
 

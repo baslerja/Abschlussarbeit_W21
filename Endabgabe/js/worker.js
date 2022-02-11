@@ -103,6 +103,16 @@ var Döner_Trainer;
             Döner_Trainer.crc2.closePath();
             Döner_Trainer.crc2.restore();
         }
+        order() {
+            let currentOrder = {
+                bread: 0,
+                tomato: 0,
+                lettuce: 0,
+                onion: 0,
+                meat: 0,
+            };
+            return currentOrder;
+        }
     }
     Döner_Trainer.Worker = Worker;
 })(Döner_Trainer || (Döner_Trainer = {}));

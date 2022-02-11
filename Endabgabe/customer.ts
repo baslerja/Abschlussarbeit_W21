@@ -34,6 +34,20 @@ namespace Döner_Trainer {
             }
         }
 
+        orderFood(): void {
+
+            //Zeichne Sprechblase mit Zutaten
+            switch (this.myOrder) {
+                case "bread":
+                case "tomato":
+                case "lettuce":
+                case "onion":
+                case "meat": 
+            }
+            
+            
+        }
+
         draw(): void {
 
             crc2.save();
@@ -65,17 +79,12 @@ namespace Döner_Trainer {
             meat: randomOrder(),
         }
         return guestOrder;
-        drawGuestOrder();
     }
 
     function randomOrder(): number {
 
         let random = Math.floor(Math.random() * (2 - 0 + 1)) + 0;
         return random;
-    }
-
-    function drawGuestOrder() {
-
     }
 }
 

@@ -25,6 +25,16 @@ var Döner_Trainer;
                 Döner_Trainer.crc2.translate(this.position.x, this.position.y);
             }
         }
+        orderFood() {
+            //Zeichne Sprechblase mit Zutaten
+            switch (this.myOrder) {
+                case "bread":
+                case "tomato":
+                case "lettuce":
+                case "onion":
+                case "meat":
+            }
+        }
         draw() {
             Döner_Trainer.crc2.save();
             Döner_Trainer.crc2.resetTransform();
@@ -53,13 +63,10 @@ var Döner_Trainer;
             meat: randomOrder(),
         };
         return guestOrder;
-        drawGuestOrder();
     }
     function randomOrder() {
         let random = Math.floor(Math.random() * (2 - 0 + 1)) + 0;
         return random;
-    }
-    function drawGuestOrder() {
     }
 })(Döner_Trainer || (Döner_Trainer = {}));
 //# sourceMappingURL=customer.js.map
