@@ -1,11 +1,6 @@
 "use strict";
 var Döner_Trainer;
 (function (Döner_Trainer) {
-    // document.querySelector("#addB")!.addEventListener("click", addBread);
-    // document.querySelector("#addT")!.addEventListener("click", addTomato);
-    // document.querySelector("#addL")!.addEventListener("click", addLettuce);
-    // document.querySelector("#addO")!.addEventListener("click", addOnion);
-    // document.querySelector("#addM")!.addEventListener("click", addMeat);
     function addBread() {
         console.log("bread was clicked");
         Döner_Trainer.currentOrder.bread++;

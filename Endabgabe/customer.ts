@@ -17,17 +17,10 @@ namespace Döner_Trainer {
             let offset: Vector = new Vector(this.velocity.x, this.velocity.y);
             offset.scale(_timeslice);
             this.position.add(offset);
-
-            // switch () {
-            //     case ACTION.INLINE:
-
-            //     case ACTION.WAITING:
-
-            //     case ACTION.LEAVING:
-            // }
         }
 
         feel(_mood: string): void {
+
             if (_mood == "happy") {
                 crc2.save();
                 crc2.translate(this.position.x, this.position.y);
@@ -51,10 +44,19 @@ namespace Döner_Trainer {
             crc2.fillStyle = "#75b8d1";
             crc2.fill();
             crc2.closePath();
+
+            crc2.beginPath();
+            crc2.arc(-5, -5, 3, 0, 2 * Math.PI);
+            crc2.arc(5, -5, 3, 0, 2 * Math.PI);
+            crc2.fillStyle = "black";
+            crc2.fill();
+            crc2.closePath();
+
             crc2.restore();
         }
+    }
 
-        function order(): Storage {
+    function order(): Storage {
         let guestOrder: Storage = {
             bread: 1,
             tomato: randomOrder(),
@@ -63,12 +65,17 @@ namespace Döner_Trainer {
             meat: randomOrder(),
         }
         return guestOrder;
+        drawGuestOrder();
+    }
 
+    function randomOrder(): number {
 
-        function randomOrder(): number {
+        let random = Math.floor(Math.random() * (2 - 0 + 1)) + 0;
+        return random;
+    }
 
-            let random = Math.floor(Math.random() * (2 - 0 + 1)) + 0;
-            return random;
-        }
+    function drawGuestOrder() {
+
     }
 }
+

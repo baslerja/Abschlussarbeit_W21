@@ -70,22 +70,13 @@ namespace Döner_Trainer {
         let startBtn: HTMLElement = <HTMLElement>document.querySelector("#startBtn");
         startBtn.addEventListener("click", startGame);
 
-        // let resetBtn: HTMLElement = <HTMLElement>document.querySelector("#resetBtn");
-        // resetBtn.addEventListener("click", handleLoad);
-
-        let buyBtn: HTMLElement = <HTMLElement>document.querySelector("#buyIngredients");
-        buyBtn.addEventListener("click", buyIngredients);
-
-        let payBtn: HTMLElement = <HTMLElement>document.querySelector("#pay");
-        payBtn.addEventListener("click", cashUpOrder);
-
         drawBackground();
         drawWarehouse();
         drawContainer();
         drawCashRegister();
 
         imageData = crc2.getImageData(0, 0, crc2.canvas.width, crc2.canvas.height);
-        window.setInterval(update, 20);
+        //window.setInterval(update, 20);
     }
 
     export function startGame(): void {
@@ -102,6 +93,12 @@ namespace Döner_Trainer {
         document.querySelector("#refillLettuce")!.addEventListener("click", refillLettuce);
         document.querySelector("#refillOnion")!.addEventListener("click", refillOnion);
         document.querySelector("#refillMeat")!.addEventListener("click", refillMeat);
+
+        let buyBtn: HTMLElement = <HTMLElement>document.querySelector("#buyIngredients");
+        buyBtn.addEventListener("click", buyIngredients);
+
+        let payBtn: HTMLElement = <HTMLElement>document.querySelector("#pay");
+        payBtn.addEventListener("click", cashUpOrder);
 
         workers = [];
         customers = [];
@@ -124,6 +121,21 @@ namespace Döner_Trainer {
         let meterB: any = document.querySelector('#stockMeterB');
         meterB.setAttribute("value", stock / 100);
         storageLeft.bread = 10 * stock;
+        let meterT: any = document.querySelector('#stockMeterT');
+        meterT.setAttribute("value", stock / 100);
+        storageLeft.tomato = 10 * stock;
+        let meterL: any = document.querySelector('#stockMeterL');
+        meterL.setAttribute("value", stock / 100);
+        storageLeft.lettuce = 10 * stock;
+        let meterO: any = document.querySelector('#stockMeterO');
+        meterO.setAttribute("value", stock / 100);
+        storageLeft.onion = 10 * stock;
+        let meterM: any = document.querySelector('#stockMeterM');
+        meterM.setAttribute("value", stock / 100);
+        storageLeft.meat = 10 * stock;
+
+        //const stressLevel = data.get('stressLevel') as string;
+        // console.log("Stresslevel Worker: " + stressLevel);
 
         createWorker();
         createCustomer();
@@ -135,13 +147,13 @@ namespace Döner_Trainer {
         for (let worker of workers) {
             worker.move(1 / 50);
             worker.draw();
-            worker.feel("neutral");
+            worker.feel("sleepy");
         }
 
         for (let customer of customers) {
             customer.move(1 / 50);
             customer.draw();
-            customer.feel("sad");
+            customer.feel("happy");
         }
     }
 
@@ -156,7 +168,7 @@ namespace Döner_Trainer {
             let randomX: number = Math.random() * (350 - 150) + 150;
             let randomY: number = Math.random() * (550 - 50) + 50;
             let worker: Human = new Worker(1, randomX, randomY);
-            // worker.feel("happy");
+            //worker.feel("sleepy");
             worker.move(1 / 50);
             worker.draw();
             workers.push(worker);
@@ -176,7 +188,7 @@ namespace Döner_Trainer {
             let customer: Human = new Customer(1, randomX, randomY);
             orders.push(customer.myOrder)
             customer.move(1 / 50);
-            // customer.feel("happy");
+            //customer.feel("happy");
             customer.draw();
             customers.push(customer);
 

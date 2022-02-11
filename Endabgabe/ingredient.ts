@@ -1,11 +1,5 @@
 namespace Döner_Trainer {
 
-    // document.querySelector("#addB")!.addEventListener("click", addBread);
-    // document.querySelector("#addT")!.addEventListener("click", addTomato);
-    // document.querySelector("#addL")!.addEventListener("click", addLettuce);
-    // document.querySelector("#addO")!.addEventListener("click", addOnion);
-    // document.querySelector("#addM")!.addEventListener("click", addMeat);
-
     export function addBread(): any {
         console.log("bread was clicked");
         currentOrder.bread++;

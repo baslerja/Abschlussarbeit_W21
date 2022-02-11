@@ -3,6 +3,7 @@ namespace Döner_Trainer {
         position: Vector;
         velocity: Vector;
         mood: string;
+        myOrder: Storage;
         
         constructor(_position: number) {
             console.log("Human constructor");

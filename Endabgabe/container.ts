@@ -79,7 +79,7 @@ namespace Döner_Trainer {
         console.log("worker is going to refill lettuce");
 
         //workers[0].move(3)      // walk to bread stock
-        let meterL: any = document.querySelector('#meterL').getAttribute("value");
+        let meterL: any = document.querySelector('#meterL')!.getAttribute("value");
         let amountMissing: number = 100 - meterL * 100;
         console.log("missing: " + amountMissing)
         console.log("before Storage " + storageLeft.lettuce)

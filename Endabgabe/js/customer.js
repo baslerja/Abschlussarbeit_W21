@@ -14,11 +14,6 @@ var Döner_Trainer;
             let offset = new Döner_Trainer.Vector(this.velocity.x, this.velocity.y);
             offset.scale(_timeslice);
             this.position.add(offset);
-            // switch () {
-            //     case ACTION.INLINE:
-            //     case ACTION.WAITING:
-            //     case ACTION.LEAVING:
-            // }
         }
         feel(_mood) {
             if (_mood == "happy") {
@@ -39,6 +34,12 @@ var Döner_Trainer;
             Döner_Trainer.crc2.fillStyle = "#75b8d1";
             Döner_Trainer.crc2.fill();
             Döner_Trainer.crc2.closePath();
+            Döner_Trainer.crc2.beginPath();
+            Döner_Trainer.crc2.arc(-5, -5, 3, 0, 2 * Math.PI);
+            Döner_Trainer.crc2.arc(5, -5, 3, 0, 2 * Math.PI);
+            Döner_Trainer.crc2.fillStyle = "black";
+            Döner_Trainer.crc2.fill();
+            Döner_Trainer.crc2.closePath();
             Döner_Trainer.crc2.restore();
         }
     }
@@ -52,10 +53,13 @@ var Döner_Trainer;
             meat: randomOrder(),
         };
         return guestOrder;
-        function randomOrder() {
-            let random = Math.floor(Math.random() * (2 - 0 + 1)) + 0;
-            return random;
-        }
+        drawGuestOrder();
+    }
+    function randomOrder() {
+        let random = Math.floor(Math.random() * (2 - 0 + 1)) + 0;
+        return random;
+    }
+    function drawGuestOrder() {
     }
 })(Döner_Trainer || (Döner_Trainer = {}));
 //# sourceMappingURL=customer.js.map

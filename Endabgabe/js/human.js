@@ -5,6 +5,7 @@ var Döner_Trainer;
         position;
         velocity;
         mood;
+        myOrder;
         constructor(_position) {
             console.log("Human constructor");
         }
