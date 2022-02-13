@@ -8,10 +8,10 @@ Quellen: Zusammenarbeit mit Fiona Virnich
 namespace Döner_Trainer {
     window.addEventListener("load", handleLoad);
 
-    export interface Vector {
-        x: number;
-        y: number;
-    }
+    // export interface Vector {
+    //     x: number;
+    //     y: number;
+    // }
 
     export interface Storage {
         bread: number;
@@ -29,15 +29,7 @@ namespace Döner_Trainer {
         meat: 1000,
     };
 
-    export interface Counter {
-        bread: number;
-        tomato: number;
-        lettuce: number;
-        onion: number;
-        meat: number;
-    }
-
-    export let counterLeft: Counter = {
+    export let counterLeft: Storage = {
         bread: 80,
         tomato: 80,
         lettuce: 80,
@@ -108,15 +100,9 @@ namespace Döner_Trainer {
         orders = [];
         ordersMade = [];
 
-        counterLeft.bread = 80;
-        counterLeft.tomato = 80;
-        counterLeft.lettuce = 80;
-        counterLeft.onion = 80;
-        counterLeft.meat = 80;
-
         const form = document.querySelector('form')!;
         const data = new FormData(form);
-        
+
         const amountStock = data.get('warehouse') as string;
         let stock: number = parseInt(amountStock + Math.floor);    //string in number parsen
         storageLeft.bread = storageLeft.tomato = storageLeft.lettuce = storageLeft.onion = storageLeft.meat = stock;
@@ -140,15 +126,14 @@ namespace Döner_Trainer {
         //const stressLevel = data.get('stressLevel') as string;
         // console.log("Stresslevel Worker: " + stressLevel);
 
-        createWorker();
-        createCustomer();
-        buildCustomers(data);
+        createWorker(data);
+        buildCustomer(data);
+
+        setTimeout(function () {
+            alert("Game Over!" + " Reload page to start a new game.");
+
+        }, 90000);//wait 90 seconds
     }
-
-    setTimeout(function () {
-        alert("Game Over!" + " Reload page to start a new game.");
-
-    }, 90000);//wait 90 seconds
 
     function update(): void {
         crc2.putImageData(imageData, 1, 1);
@@ -166,9 +151,9 @@ namespace Döner_Trainer {
         }
     }
 
-    function createWorker(): void {
-        const form = document.querySelector('form')!;
-        const data = new FormData(form);
+    function createWorker(data: FormData): void {
+        // const form = document.querySelector('form')!;
+        // const data = new FormData(form);
 
         const amountStaff = data.get('amountStaff') as string;    //form Data anzahl worker als string holen
         let staff: number = parseInt(amountStaff);
@@ -182,14 +167,19 @@ namespace Döner_Trainer {
             worker.draw();
             workers.push(worker);
         }
-
-        
     }
 
-    function createCustomer(): void {
-        const form = document.querySelector('form')!;
-        const data = new FormData(form);
+    async function buildCustomer(data: FormData) {
+        const amountCustomer = data.get('amountCustomer') as string;    //form Data anzahl worker als string holen
+        let amountC: number = parseInt(amountCustomer);
 
+        for (let index = 0; index < amountC; index++) {      //solange index kleiner als anzahl costumer ist soll ein neuer costumer erstellt werden
+            await new Promise(f => setTimeout(f, 6000 /* / amountC */));     // Math.floor(Math.random() * (60000 - 1000 + 1)) + 1000  
+            createCustomer(data);
+        }
+    }
+
+    function createCustomer(data: FormData) {
         const amountCustomer = data.get('amountCustomers') as string;    //form Data anzahl worker als string holen
         let amountC: number = parseInt(amountCustomer);
 
@@ -205,49 +195,12 @@ namespace Döner_Trainer {
 
             console.log(" Order of Customer: ")
             console.log(customer.myOrder);
+
+            // info.innerHTML = " ";
+            let firstOrder: string = "Ich hätte gerne einen Döner mit " + customer.myOrder.tomato + " Tomaten, " + customer.myOrder.lettuce + " mal Kraut, " + customer.myOrder.onion + " Zwiebeln und " + customer.myOrder.meat + " Fleisch." + "<br> ";
+            displayOrders.push(firstOrder);
+            info.innerHTML = displayOrders;
         }
-
-        console.log(" Order of Customer: ")
-        console.log(customer.myOrder);
-
-
-        // info.innerHTML = " ";
-        let firstOrder: string = "Ich hätte gerne einen Döner mit " + customer.myOrder.tomato + " Tomaten, " + customer.myOrder.lettuce + " mal Kraut, " + customer.myOrder.onion + " Zwiebeln und " + customer.myOrder.meat + " Fleisch." + "<br> ";
-        displayOrders.push(firstOrder);
-        info.innerHTML = displayOrders;
-    }
-
-    async function buildCustomers(data: FormData) {
-        const amountCostumer = data.get('amountCostumer') as string;    //form Data anzahl worker als string holen
-        let amountC: number = parseInt(amountCostumer);
-
-        for (let index = 0; index < amountC; index++) {      //solange index kleiner als anzahl costumer ist soll ein neuer costumer erstellt werden
-            await new Promise(f => setTimeout(f, 6000 /* / amountC */));     // Math.floor(Math.random() * (60000 - 1000 + 1)) + 1000  
-            createCostumer();
-        }
-    }
-
-    function createCostumer(): any {
-
-        // console.log('new customer created'); 
-        let customer: Customer = new Customer(1, 830, 380);
-        orders.push(customer.myOrder)
-        //customer.feel(moodCustomer[0]);
-        customer.draw();
-        customers.push(customer);
-        customer.move(1 / 50);
-
-        console.log(" Order of Customer: ")
-        console.log(customer.myOrder);
-
-
-        // info.innerHTML = " ";
-        let firstOrder: string = "Ich hätte gerne einen Döner mit " + customer.myOrder.tomato + " Tomaten, " + customer.myOrder.lettuce + " mal Kraut, " + customer.myOrder.onion + " Zwiebeln und " + customer.myOrder.meat + " Fleisch." + "<br> ";
-        displayOrders.push(firstOrder);
-        info.innerHTML = displayOrders;
-        //console.log(1 + index + " customers erstellt");
-        //console.log("c position = " + customer.position.x + " and " + customer.position.y);
-
     }
 
     function cashUpOrder(): any {
@@ -264,16 +217,14 @@ namespace Döner_Trainer {
 
             console.log("order was right");
             console.log("länge davor: " + customers.length + " " + ordersMade.length + " " + orders.length);
-            
 
             ordersMade.shift();
             orders.shift();
             displayOrders.shift();
-            setTimeout(function(){
+            setTimeout(function () {
                 customers.shift();
-                console.log("Thank you! Bye."); 
-    
-           },3000)
+                console.log("Thank you! Bye.");
+            }, 3000)
 
             info.innerHTML = "";
             info.innerHTML += displayOrders;
@@ -284,25 +235,23 @@ namespace Döner_Trainer {
             currentOrder.onion = 0;
             currentOrder.meat = 0;
 
-
         } else {
             // debugger;
             customers[0].draw();
             //customers[0].feel(moodCustomer[1]);
-            
+
             console.log("order was wrong");
             console.log(ordersMade[0]);
             console.log("länge davor: " + customers.length + " " + ordersMade.length + " " + orders.length);
-            
+
             ordersMade.shift();
             orders.shift();
             displayOrders.shift();
 
-            setTimeout(function(){
+            setTimeout(function () {
                 customers.shift();
-                console.log("That was not what I've ordered! I'm leaving."); 
-    
-           },3000)
+                console.log("That was not what I've ordered! I'm leaving.");
+            }, 3000)
             // let info: any = document.querySelector("#info");
             info.innerHTML = "";
             info.innerHTML += displayOrders;

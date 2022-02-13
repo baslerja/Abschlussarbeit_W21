@@ -17,6 +17,30 @@ namespace Döner_Trainer {
             let offset: Vector = new Vector(this.velocity.x, this.velocity.y);
             offset.scale(_timeslice);
             this.position.add(offset);
+            
+            if (this.position.x < 520) {
+                this.position.x += 10;
+                this.velocity.set(10, 0);
+                this.velocity.scale(5);
+            }
+
+            if (this.position.x > 780) {
+                this.position.x -= 10;
+                this.velocity.set(-10, 0);
+                this.velocity.scale(5);
+            }
+
+            if (this.position.y < 20) {
+                this.position.y += 10;
+                this.velocity.set(10, 0);
+                this.velocity.scale(5);
+            }
+
+            if (this.position.y > 580) {
+                this.position.y -= 10;
+                this.velocity.set(-10, 0);
+                this.velocity.scale(5);
+            }
         }
 
         feel(_mood: string): void {
@@ -32,20 +56,6 @@ namespace Döner_Trainer {
                 crc2.translate(this.position.x, this.position.y);
 
             }
-        }
-
-        orderFood(): void {
-
-            //Zeichne Sprechblase mit Zutaten
-            switch (this.myOrder) {
-                case "bread":
-                case "tomato":
-                case "lettuce":
-                case "onion":
-                case "meat": 
-            }
-            
-            
         }
 
         draw(): void {

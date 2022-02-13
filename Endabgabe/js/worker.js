@@ -12,26 +12,6 @@ var Döner_Trainer;
             let offset = new Döner_Trainer.Vector(this.velocity.x, this.velocity.y);
             offset.scale(_timeslice);
             this.position.add(offset);
-            // if (this.position.x < 100) {
-            //     this.position.x += 10;
-            //     this.velocity.set(15, 0);
-            //     this.velocity.scale(5);
-            // }
-            // if (this.position.x > 400) {
-            //     this.position.x -= 10;
-            //     this.velocity.set(-15, 0);
-            //     this.velocity.scale(5);
-            // }
-            // if (this.position.y < 0) {
-            //     this.position.x += 30;
-            //     this.velocity.set(15, 0);
-            //     this.velocity.scale(5);
-            // }
-            // if (this.position.y > 600) {
-            //     this.position.x -= 30;
-            //     this.velocity.set(-15, 0);
-            //     this.velocity.scale(5);
-            // }
         }
         feel(_mood) {
             if (_mood == "sleepy") {

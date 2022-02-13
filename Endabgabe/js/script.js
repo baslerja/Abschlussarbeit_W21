@@ -71,11 +71,6 @@ var Döner_Trainer;
         customers = [];
         orders = [];
         ordersMade = [];
-        Döner_Trainer.counterLeft.bread = 80;
-        Döner_Trainer.counterLeft.tomato = 80;
-        Döner_Trainer.counterLeft.lettuce = 80;
-        Döner_Trainer.counterLeft.onion = 80;
-        Döner_Trainer.counterLeft.meat = 80;
         const form = document.querySelector('form');
         const data = new FormData(form);
         const amountStock = data.get('warehouse');
@@ -98,14 +93,13 @@ var Döner_Trainer;
         Döner_Trainer.storageLeft.meat = 10 * stock;
         //const stressLevel = data.get('stressLevel') as string;
         // console.log("Stresslevel Worker: " + stressLevel);
-        createWorker();
-        createCustomer();
-        buildCustomers(data);
+        createWorker(data);
+        buildCustomer(data);
+        setTimeout(function () {
+            alert("Game Over!" + " Reload page to start a new game.");
+        }, 90000); //wait 90 seconds
     }
     Döner_Trainer.startGame = startGame;
-    setTimeout(function () {
-        alert("Game Over!" + " Reload page to start a new game.");
-    }, 90000); //wait 90 seconds
     function update() {
         Döner_Trainer.crc2.putImageData(imageData, 1, 1);
         for (let worker of workers) {
@@ -119,9 +113,9 @@ var Döner_Trainer;
             customer.feel("happy");
         }
     }
-    function createWorker() {
-        const form = document.querySelector('form');
-        const data = new FormData(form);
+    function createWorker(data) {
+        // const form = document.querySelector('form')!;
+        // const data = new FormData(form);
         const amountStaff = data.get('amountStaff'); //form Data anzahl worker als string holen
         let staff = parseInt(amountStaff);
         for (let i = 0; i < staff; i++) {
@@ -134,9 +128,15 @@ var Döner_Trainer;
             workers.push(worker);
         }
     }
-    function createCustomer() {
-        const form = document.querySelector('form');
-        const data = new FormData(form);
+    async function buildCustomer(data) {
+        const amountCustomer = data.get('amountCustomer'); //form Data anzahl worker als string holen
+        let amountC = parseInt(amountCustomer);
+        for (let index = 0; index < amountC; index++) { //solange index kleiner als anzahl costumer ist soll ein neuer costumer erstellt werden
+            await new Promise(f => setTimeout(f, 6000 /* / amountC */)); // Math.floor(Math.random() * (60000 - 1000 + 1)) + 1000  
+            createCustomer(data);
+        }
+    }
+    function createCustomer(data) {
         const amountCustomer = data.get('amountCustomers'); //form Data anzahl worker als string holen
         let amountC = parseInt(amountCustomer);
         for (let i = 0; i < amountC; i++) {
@@ -150,38 +150,11 @@ var Döner_Trainer;
             customers.push(customer);
             console.log(" Order of Customer: ");
             console.log(customer.myOrder);
+            // info.innerHTML = " ";
+            let firstOrder = "Ich hätte gerne einen Döner mit " + customer.myOrder.tomato + " Tomaten, " + customer.myOrder.lettuce + " mal Kraut, " + customer.myOrder.onion + " Zwiebeln und " + customer.myOrder.meat + " Fleisch." + "<br> ";
+            displayOrders.push(firstOrder);
+            info.innerHTML = displayOrders;
         }
-        console.log(" Order of Customer: ");
-        console.log(customer.myOrder);
-        // info.innerHTML = " ";
-        let firstOrder = "Ich hätte gerne einen Döner mit " + customer.myOrder.tomato + " Tomaten, " + customer.myOrder.lettuce + " mal Kraut, " + customer.myOrder.onion + " Zwiebeln und " + customer.myOrder.meat + " Fleisch." + "<br> ";
-        displayOrders.push(firstOrder);
-        info.innerHTML = displayOrders;
-    }
-    async function buildCustomers(data) {
-        const amountCostumer = data.get('amountCostumer'); //form Data anzahl worker als string holen
-        let amountC = parseInt(amountCostumer);
-        for (let index = 0; index < amountC; index++) { //solange index kleiner als anzahl costumer ist soll ein neuer costumer erstellt werden
-            await new Promise(f => setTimeout(f, 6000 /* / amountC */)); // Math.floor(Math.random() * (60000 - 1000 + 1)) + 1000  
-            createCostumer();
-        }
-    }
-    function createCostumer() {
-        // console.log('new customer created'); 
-        let customer = new Döner_Trainer.Customer(1, 830, 380);
-        orders.push(customer.myOrder);
-        //customer.feel(moodCustomer[0]);
-        customer.draw();
-        customers.push(customer);
-        customer.move(1 / 50);
-        console.log(" Order of Customer: ");
-        console.log(customer.myOrder);
-        // info.innerHTML = " ";
-        let firstOrder = "Ich hätte gerne einen Döner mit " + customer.myOrder.tomato + " Tomaten, " + customer.myOrder.lettuce + " mal Kraut, " + customer.myOrder.onion + " Zwiebeln und " + customer.myOrder.meat + " Fleisch." + "<br> ";
-        displayOrders.push(firstOrder);
-        info.innerHTML = displayOrders;
-        //console.log(1 + index + " customers erstellt");
-        //console.log("c position = " + customer.position.x + " and " + customer.position.y);
     }
     function cashUpOrder() {
         ordersMade.push(Döner_Trainer.currentOrder);

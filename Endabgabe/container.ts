@@ -57,6 +57,15 @@ namespace Döner_Trainer {
         setTimeout(bringBread, 5000);
     }
 
+    function bringBread(): void {
+        console.log("worker is bringing bread to counter")
+        //workers[0].move(3)      // walk back to bread counter
+        //workers[0].draw          // draw extra refillcontainer at worker
+        counterLeft.bread = 100;
+        let meterB: any = document.querySelector('#meterB')
+        meterB.setAttribute("value", 1);
+    }
+
     export function refillTomato(): void {
         console.log("worker is going to refill tomato");
 
@@ -73,6 +82,16 @@ namespace Döner_Trainer {
 
         // if workers position is in front of container:
         setTimeout(bringTomato, 5000);
+    }
+
+    function bringTomato(): void {
+        console.log("worker is bringing tomato to counter")
+        //workers[0].move(3)      // walk back to bread counter
+        //workers[0].draw          // draw extra refillcontainer at worker
+        counterLeft.tomato = 100;
+        let meterT: any = document.querySelector('#meterT')
+        meterT.setAttribute("value", 1);
+
     }
 
     export function refillLettuce(): void {
@@ -93,6 +112,16 @@ namespace Döner_Trainer {
         setTimeout(bringLettuce, 5000);
     }
 
+    function bringLettuce(): void {
+        console.log("worker is bringing lettuce to counter")
+        //workers[0].move(3)      // walk back to bread counter
+        //workers[0].draw          // draw extra refillcontainer at worker
+        counterLeft.lettuce = 100;
+        let meterL: any = document.querySelector('#meterL')
+        meterL.setAttribute("value", 1);
+
+    }
+
     export function refillOnion(): void {
         console.log("worker is going to refill bread");
 
@@ -111,6 +140,15 @@ namespace Döner_Trainer {
         setTimeout(bringOnion, 5000);
     }
 
+    function bringOnion(): void {
+        console.log("worker is bringing onion to counter")
+        //workers[0].move(3)      // walk back to bread counter
+        //workers[0].draw          // draw extra refillcontainer at worker
+        counterLeft.onion = 100;
+        let meterO: any = document.querySelector('#meterO')
+        meterO.setAttribute("value", 1);
+    }
+
     export function refillMeat(): void {
         console.log("worker is going to refill meat");
 
@@ -127,5 +165,16 @@ namespace Döner_Trainer {
 
         // if workers position is in front of container:
         setTimeout(bringMeat, 5000);
+    }
+
+    function bringMeat(): void {
+        console.log("worker is bringing meat to counter")
+        //workers[0].move(3)      // walk back to bread counter
+        //workers[0].draw          // draw extra refillcontainer at worker
+        counterLeft.meat = 100;
+        let meterM: any = document.querySelector('#meterM')
+        meterM.setAttribute("value", 1);
+        console.log(storageLeft.meat);
+
     }
 }

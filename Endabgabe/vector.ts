@@ -22,17 +22,17 @@ namespace Döner_Trainer {
             this.y += _addend.y;
         }
 
-        random(_minLength: number, _maxLength: number): void {
-            let length: number = _minLength + Math.random() * (_maxLength - _minLength);
-            let direction: number = Math.random() * 2 * Math.PI;
+        // random(_minLength: number, _maxLength: number): void {
+        //     let length: number = _minLength + Math.random() * (_maxLength - _minLength);
+        //     let direction: number = Math.random() * 2 * Math.PI;
 
-            this.set(Math.cos(direction), Math.sin(direction));
-            this.scale(length);
-        }
+        //     this.set(Math.cos(direction), Math.sin(direction));
+        //     this.scale(length);
+        // }
 
-        public copy(): Vector {
-            let copy: Vector = new Vector(this.x, this.y);
-            return (copy);
-        }
+        // public copy(): Vector {
+        //     let copy: Vector = new Vector(this.x, this.y);
+        //     return (copy);
+        // }
     }
 }

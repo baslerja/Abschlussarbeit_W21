@@ -46,6 +46,14 @@ var Döner_Trainer;
         setTimeout(bringBread, 5000);
     }
     Döner_Trainer.refillBread = refillBread;
+    function bringBread() {
+        console.log("worker is bringing bread to counter");
+        //workers[0].move(3)      // walk back to bread counter
+        //workers[0].draw          // draw extra refillcontainer at worker
+        Döner_Trainer.counterLeft.bread = 100;
+        let meterB = document.querySelector('#meterB');
+        meterB.setAttribute("value", 1);
+    }
     function refillTomato() {
         console.log("worker is going to refill tomato");
         //workers[0].move(3)      // walk to bread stock
@@ -62,6 +70,14 @@ var Döner_Trainer;
         setTimeout(bringTomato, 5000);
     }
     Döner_Trainer.refillTomato = refillTomato;
+    function bringTomato() {
+        console.log("worker is bringing tomato to counter");
+        //workers[0].move(3)      // walk back to bread counter
+        //workers[0].draw          // draw extra refillcontainer at worker
+        Döner_Trainer.counterLeft.tomato = 100;
+        let meterT = document.querySelector('#meterT');
+        meterT.setAttribute("value", 1);
+    }
     function refillLettuce() {
         console.log("worker is going to refill lettuce");
         //workers[0].move(3)      // walk to bread stock
@@ -78,6 +94,14 @@ var Döner_Trainer;
         setTimeout(bringLettuce, 5000);
     }
     Döner_Trainer.refillLettuce = refillLettuce;
+    function bringLettuce() {
+        console.log("worker is bringing lettuce to counter");
+        //workers[0].move(3)      // walk back to bread counter
+        //workers[0].draw          // draw extra refillcontainer at worker
+        Döner_Trainer.counterLeft.lettuce = 100;
+        let meterL = document.querySelector('#meterL');
+        meterL.setAttribute("value", 1);
+    }
     function refillOnion() {
         console.log("worker is going to refill bread");
         //workers[0].move(3)      // walk to bread stock
@@ -94,6 +118,14 @@ var Döner_Trainer;
         setTimeout(bringOnion, 5000);
     }
     Döner_Trainer.refillOnion = refillOnion;
+    function bringOnion() {
+        console.log("worker is bringing onion to counter");
+        //workers[0].move(3)      // walk back to bread counter
+        //workers[0].draw          // draw extra refillcontainer at worker
+        Döner_Trainer.counterLeft.onion = 100;
+        let meterO = document.querySelector('#meterO');
+        meterO.setAttribute("value", 1);
+    }
     function refillMeat() {
         console.log("worker is going to refill meat");
         //workers[0].move(3)      // walk to bread stock
@@ -110,5 +142,14 @@ var Döner_Trainer;
         setTimeout(bringMeat, 5000);
     }
     Döner_Trainer.refillMeat = refillMeat;
+    function bringMeat() {
+        console.log("worker is bringing meat to counter");
+        //workers[0].move(3)      // walk back to bread counter
+        //workers[0].draw          // draw extra refillcontainer at worker
+        Döner_Trainer.counterLeft.meat = 100;
+        let meterM = document.querySelector('#meterM');
+        meterM.setAttribute("value", 1);
+        console.log(Döner_Trainer.storageLeft.meat);
+    }
 })(Döner_Trainer || (Döner_Trainer = {}));
 //# sourceMappingURL=container.js.map
