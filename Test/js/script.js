@@ -3,8 +3,8 @@
 Endabgabe Döner-Trainer
 Name: Jasmin Basler
 Matrikel: 265114
-Datum:
-Quellen: Zusammenarbeit mit Fiona Virnich
+Datum: 14.02.2022
+Quellen: In Zusammenarbeit mit Fiona Virnich
 */
 var Döner_Trainer;
 (function (Döner_Trainer) {
@@ -31,12 +31,12 @@ var Döner_Trainer;
         meat: 0,
     };
     let info = document.querySelector("#info");
-    let imageData;
-    let workers = [];
-    let customers = [];
-    let orders = [];
-    let ordersMade = [];
-    let displayOrders = [];
+    Döner_Trainer.workers = [];
+    Döner_Trainer.customers = [];
+    Döner_Trainer.orders = [];
+    Döner_Trainer.ordersMade = [];
+    Döner_Trainer.displayOrders = [];
+    Döner_Trainer.currentCustomerAmount = 0;
     function handleLoad(_event) {
         let canvas = document.querySelector("canvas");
         if (!canvas)
@@ -48,10 +48,10 @@ var Döner_Trainer;
         drawWarehouse();
         drawContainer();
         drawCashRegister();
-        imageData = Döner_Trainer.crc2.getImageData(0, 0, Döner_Trainer.crc2.canvas.width, Döner_Trainer.crc2.canvas.height);
+        Döner_Trainer.imageData = Döner_Trainer.crc2.getImageData(0, 0, Döner_Trainer.crc2.canvas.width, Döner_Trainer.crc2.canvas.height);
         window.setInterval(update, 20);
     }
-    function startGame() {
+    function startGame(_event) {
         console.log("start Game");
         document.querySelector("#addB").addEventListener("click", Döner_Trainer.addBread);
         document.querySelector("#addT").addEventListener("click", Döner_Trainer.addTomato);
@@ -67,10 +67,11 @@ var Döner_Trainer;
         buyBtn.addEventListener("click", Döner_Trainer.buyIngredients);
         let payBtn = document.querySelector("#pay");
         payBtn.addEventListener("click", cashUpOrder);
-        workers = [];
-        customers = [];
-        orders = [];
-        ordersMade = [];
+        Döner_Trainer.workers = [];
+        Döner_Trainer.customers = [];
+        Döner_Trainer.orders = [];
+        Döner_Trainer.ordersMade = [];
+        Döner_Trainer.currentCustomerAmount = 0;
         const form = document.querySelector('form');
         const data = new FormData(form);
         const amountStock = data.get('warehouse');
@@ -94,20 +95,20 @@ var Döner_Trainer;
         //const stressLevel = data.get('stressLevel') as string;
         // console.log("Stresslevel Worker: " + stressLevel);
         createWorker(data);
-        buildCustomer(data);
+        sendCustomers(data);
         setTimeout(function () {
             alert("Game Over!" + " Reload page to start a new game.");
         }, 90000); //wait 90 seconds
     }
     Döner_Trainer.startGame = startGame;
     function update() {
-        Döner_Trainer.crc2.putImageData(imageData, 1, 1);
-        for (let worker of workers) {
+        Döner_Trainer.crc2.putImageData(Döner_Trainer.imageData, 1, 1);
+        for (let worker of Döner_Trainer.workers) {
             worker.move(1 / 50);
             worker.draw();
             worker.feel("sleepy");
         }
-        for (let customer of customers) {
+        for (let customer of Döner_Trainer.customers) {
             customer.move(1 / 50);
             customer.draw();
             customer.feel("happy");
@@ -125,58 +126,65 @@ var Döner_Trainer;
             //worker.feel("sleepy");
             worker.move(1 / 50);
             worker.draw();
-            workers.push(worker);
+            Döner_Trainer.workers.push(worker);
         }
     }
-    async function buildCustomer(data) {
-        const amountCustomer = data.get('amountCustomer'); //form Data anzahl worker als string holen
+    async function sendCustomers(data) {
+        const amountCustomer = data.get("amountCustomers"); //form Data anzahl worker als string holen
         let amountC = parseInt(amountCustomer);
+        console.log("Amount customers " + amountC);
         for (let index = 0; index < amountC; index++) { //solange index kleiner als anzahl costumer ist soll ein neuer costumer erstellt werden
             await new Promise(f => setTimeout(f, 6000 /* / amountC */)); // Math.floor(Math.random() * (60000 - 1000 + 1)) + 1000  
-            createCustomer(data);
+            createCustomer();
+            console.log("send customer");
         }
     }
-    function createCustomer(data) {
-        const amountCustomer = data.get('amountCustomers'); //form Data anzahl worker als string holen
-        let amountC = parseInt(amountCustomer);
-        for (let i = 0; i < amountC; i++) {
-            let randomX = Math.random() * (750 - 550) + 550;
-            let randomY = Math.random() * (550 - 50) + 50;
-            let customer = new Döner_Trainer.Customer(1, randomX, randomY);
-            orders.push(customer.myOrder);
-            customer.move(1 / 50);
-            //customer.feel("happy");
-            customer.draw();
-            customers.push(customer);
-            console.log(" Order of Customer: ");
-            console.log(customer.myOrder);
-            // info.innerHTML = " ";
-            let firstOrder = "Ich hätte gerne einen Döner mit " + customer.myOrder.tomato + " Tomaten, " + customer.myOrder.lettuce + " mal Kraut, " + customer.myOrder.onion + " Zwiebeln und " + customer.myOrder.meat + " Fleisch." + "<br> ";
-            displayOrders.push(firstOrder);
-            info.innerHTML = displayOrders;
-        }
+    function createCustomer() {
+        console.log('new customer created');
+        let customer = new Döner_Trainer.Customer(1, 780, 300);
+        Döner_Trainer.orders.push(customer.myOrder);
+        customer.feel("happy");
+        customer.draw();
+        Döner_Trainer.customers.push(customer);
+        customer.move(1 / 50);
+        console.log(" Order of Customer: ");
+        console.log(customer.myOrder);
+        // info.innerHTML = " ";
+        let firstOrder = "Ich hätte gerne einen Döner mit " + customer.myOrder.tomato + " mal Tomaten, " + customer.myOrder.lettuce + " mal Kraut, " + customer.myOrder.onion + " mal Zwiebeln und " + customer.myOrder.meat + " mal Fleisch." + "<br> " + "<br> ";
+        Döner_Trainer.displayOrders.push(firstOrder);
+        // info.innerHTML.get(displayOrders) as string;
+        info.innerHTML = Döner_Trainer.displayOrders;
+        Döner_Trainer.currentCustomerAmount++;
+        //console.log(1 + index + " customers erstellt");
+        // console.log("c position = " + customer.position.x + " and " + customer.position.y);
     }
+    Döner_Trainer.createCustomer = createCustomer;
+    function randomOrder() {
+        let random = Math.floor(Math.random() * (2 - 0 + 1)) + 0;
+        return random;
+    }
+    Döner_Trainer.randomOrder = randomOrder;
     function cashUpOrder() {
-        ordersMade.push(Döner_Trainer.currentOrder);
+        Döner_Trainer.ordersMade.push(Döner_Trainer.currentOrder);
         console.log(Döner_Trainer.currentOrder);
-        console.log(ordersMade[0]);
-        if (ordersMade[0].bread == orders[0].bread && ordersMade[0].lettuce == orders[0].lettuce && ordersMade[0].meat == orders[0].meat
-            && ordersMade[0].onion == orders[0].onion && ordersMade[0].tomato == orders[0].tomato) {
+        console.log(Döner_Trainer.ordersMade[0]);
+        if (Döner_Trainer.ordersMade[0].bread == Döner_Trainer.orders[0].bread && Döner_Trainer.ordersMade[0].lettuce == Döner_Trainer.orders[0].lettuce && Döner_Trainer.ordersMade[0].meat == Döner_Trainer.orders[0].meat
+            && Döner_Trainer.ordersMade[0].onion == Döner_Trainer.orders[0].onion && Döner_Trainer.ordersMade[0].tomato == Döner_Trainer.orders[0].tomato) {
             // if (currentOrder == orders[0]) {
             // debugger;
-            customers[0].feel("happy");
+            Döner_Trainer.customers[0].feel("happy");
             console.log("order was right");
-            console.log("länge davor: " + customers.length + " " + ordersMade.length + " " + orders.length);
-            ordersMade.shift();
-            orders.shift();
-            displayOrders.shift();
+            console.log("länge davor: " + Döner_Trainer.customers.length + " " + Döner_Trainer.ordersMade.length + " " + Döner_Trainer.orders.length);
+            Döner_Trainer.ordersMade.shift();
+            Döner_Trainer.orders.shift();
+            Döner_Trainer.displayOrders.shift();
             setTimeout(function () {
-                customers.shift();
+                Döner_Trainer.customers.shift();
                 console.log("Thank you! Bye.");
             }, 3000);
             info.innerHTML = "";
-            info.innerHTML += displayOrders;
-            console.log("länge danach: " + customers.length + " " + ordersMade.length + " " + orders.length);
+            info.innerHTML += Döner_Trainer.displayOrders;
+            console.log("länge danach: " + Döner_Trainer.customers.length + " " + Döner_Trainer.ordersMade.length + " " + Döner_Trainer.orders.length);
             Döner_Trainer.currentOrder.bread = 0;
             Döner_Trainer.currentOrder.tomato = 0;
             Döner_Trainer.currentOrder.lettuce = 0;
@@ -185,22 +193,22 @@ var Döner_Trainer;
         }
         else {
             // debugger;
-            customers[0].draw();
+            Döner_Trainer.customers[0].draw();
             //customers[0].feel(moodCustomer[1]);
             console.log("order was wrong");
-            console.log(ordersMade[0]);
-            console.log("länge davor: " + customers.length + " " + ordersMade.length + " " + orders.length);
-            ordersMade.shift();
-            orders.shift();
-            displayOrders.shift();
+            console.log(Döner_Trainer.ordersMade[0]);
+            console.log("länge davor: " + Döner_Trainer.customers.length + " " + Döner_Trainer.ordersMade.length + " " + Döner_Trainer.orders.length);
+            Döner_Trainer.ordersMade.shift();
+            Döner_Trainer.orders.shift();
+            Döner_Trainer.displayOrders.shift();
             setTimeout(function () {
-                customers.shift();
+                Döner_Trainer.customers.shift();
                 console.log("That was not what I've ordered! I'm leaving.");
             }, 3000);
             // let info: any = document.querySelector("#info");
             info.innerHTML = "";
-            info.innerHTML += displayOrders;
-            console.log("länge danach: " + customers.length + " " + ordersMade.length + " " + orders.length);
+            info.innerHTML += Döner_Trainer.displayOrders;
+            console.log("länge danach: " + Döner_Trainer.customers.length + " " + Döner_Trainer.ordersMade.length + " " + Döner_Trainer.orders.length);
             Döner_Trainer.currentOrder.bread = 0;
             Döner_Trainer.currentOrder.tomato = 0;
             Döner_Trainer.currentOrder.lettuce = 0;

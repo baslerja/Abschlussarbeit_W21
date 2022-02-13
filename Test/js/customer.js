@@ -2,13 +2,12 @@
 var Döner_Trainer;
 (function (Döner_Trainer) {
     class Customer extends Döner_Trainer.Human {
-        myOrder;
         constructor(_position, _x, _y) {
             super(_position);
             this.position = new Döner_Trainer.Vector(_x, _y);
             this.velocity = new Döner_Trainer.Vector(0, 0);
-            // this.velocity.set();
-            this.myOrder = order();
+            this.velocity.set(100, 0);
+            this.myOrder = this.showOrder();
         }
         move(_timeslice) {
             let offset = new Döner_Trainer.Vector(this.velocity.x, this.velocity.y);
@@ -39,10 +38,30 @@ var Döner_Trainer;
             if (_mood == "happy") {
                 Döner_Trainer.crc2.save();
                 Döner_Trainer.crc2.translate(this.position.x, this.position.y);
+                Döner_Trainer.crc2.beginPath();
+                Döner_Trainer.crc2.arc(-5, -5, 3, 0, 2 * Math.PI);
+                Döner_Trainer.crc2.arc(5, -5, 3, 0, 2 * Math.PI);
+                Döner_Trainer.crc2.fillStyle = "black";
+                Döner_Trainer.crc2.fill();
+                Döner_Trainer.crc2.closePath();
+                Döner_Trainer.crc2.beginPath();
+                Döner_Trainer.crc2.strokeStyle = "black";
+                Döner_Trainer.crc2.lineWidth = 3;
+                Döner_Trainer.crc2.arc(0, 3, 8, 0, 1 * Math.PI);
+                Döner_Trainer.crc2.stroke();
+                Döner_Trainer.crc2.closePath();
+                Döner_Trainer.crc2.restore();
             }
             if (_mood == "angry") {
                 Döner_Trainer.crc2.save();
                 Döner_Trainer.crc2.translate(this.position.x, this.position.y);
+                Döner_Trainer.crc2.beginPath();
+                Döner_Trainer.crc2.strokeStyle = "black";
+                Döner_Trainer.crc2.lineWidth = 3;
+                Döner_Trainer.crc2.arc(0, 10, 8, 0, 1 * Math.PI, true);
+                Döner_Trainer.crc2.stroke();
+                Döner_Trainer.crc2.closePath();
+                Döner_Trainer.crc2.restore();
             }
         }
         draw() {
@@ -62,21 +81,17 @@ var Döner_Trainer;
             Döner_Trainer.crc2.closePath();
             Döner_Trainer.crc2.restore();
         }
+        showOrder() {
+            let guestOrder = {
+                bread: 1,
+                tomato: Döner_Trainer.randomOrder(),
+                lettuce: Döner_Trainer.randomOrder(),
+                onion: Döner_Trainer.randomOrder(),
+                meat: Döner_Trainer.randomOrder(),
+            };
+            return guestOrder;
+        }
     }
     Döner_Trainer.Customer = Customer;
-    function order() {
-        let guestOrder = {
-            bread: 1,
-            tomato: randomOrder(),
-            lettuce: randomOrder(),
-            onion: randomOrder(),
-            meat: randomOrder(),
-        };
-        return guestOrder;
-    }
-    function randomOrder() {
-        let random = Math.floor(Math.random() * (2 - 0 + 1)) + 0;
-        return random;
-    }
 })(Döner_Trainer || (Döner_Trainer = {}));
 //# sourceMappingURL=customer.js.map
